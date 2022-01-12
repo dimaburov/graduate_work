@@ -86,7 +86,7 @@ namespace WpfApp4
                                     new Pen(GetColor(random_color_line), line_check),
                                     new CirclePointMarker { Size = 5.0, Fill = GetColor(random_color_line) },
                                     new PenDescription("x'' + "+ double.Parse(TextBoxAlpha.Text) + "(1-x^2)x' + x =0, n = "+ int.Parse(CountN.Text)));
-
+            
             //Меняем рисование дополнительного графика
             //Линия Y t
             CanvasDrowTime.AddLineGraph(viewModel.Data_X_t,
@@ -134,10 +134,6 @@ namespace WpfApp4
             Point start_point = new Point(double.Parse(TextBoxX0.Text), double.Parse(TextBoxY0.Text));
             viewModel.Data_Xdt_X.Collection.Add(start_point);
 
-            Point new_point = function_get_new_point(start_point, alpha);
-            viewModel.Data_Xdt_X.Collection.Add(new_point);
-
-
             //Коллекция точек для графика axisX = t axisY = X
             //viewModel.Data_X_t.Collection.Add(new Point(0, double.Parse(TextBoxX0.Text)));
 
@@ -151,7 +147,22 @@ namespace WpfApp4
             double[] const_1_2 = calculation_const(double.Parse(TextBoxX0.Text), double.Parse(TextBoxY0.Text), lambda_1_2[0], lambda_1_2[1]);
 
             //выбор метода реализации
-            //bool choice = false;
+            bool choice = false;
+            //Метод Рунге-Кутта
+            double h = 0.1;
+            Point new_point = start_point;
+
+            if (choice)
+            {
+                new_point = function_get_new_point(start_point, alpha);
+            }
+            else
+            {
+                new_point.X = runge_kutta_x(h, start_point, alpha);
+                new_point.Y = runge_kutta_y(h, start_point, alpha);
+            }
+
+            viewModel.Data_Xdt_X.Collection.Add(new_point);
 
             for (double t = 0; t < int.Parse(CountN.Text); t=t+0.1)
             {
@@ -195,22 +206,21 @@ namespace WpfApp4
                     //double yt = SetSigFigs(lambda_1_2[0]*xt + Math.Exp(lambda_1_2[0]*t)*(-const_1_2[0]*lambda_1_2[1]*Math.Sin(lambda_1_2[1]*t) + const_1_2[1]*lambda_1_2[1]*Math.Cos(lambda_1_2[1]*t)), accuracy);
                 }
                 
-                //if (choice)
-                //{
+                if (choice)
+                {
                     //Разностный метод
                     new_point = function_get_new_point(new_point, alpha);
-                    Console.WriteLine("X = " + new_point.X + " Y = " + new_point.Y);
-                //}
-                //else
-                //{
+                }
+                else
+                {
                     //Метод Рунге-Кутта
-                    //double h = 0.1;
-                    //new_point.X = runge_kutta_x(h, new_point, alpha);
-                    //new_point.Y = runge_kutta_y(h, new_point, alpha);
+                    Point variable_point = new_point;
+                    new_point.X = runge_kutta_x(h, variable_point, alpha);
+                    new_point.Y = runge_kutta_y(h, variable_point, alpha);
+                }
 
-                    //Console.WriteLine("X = " + new_point.X + " Y = " + new_point.Y);
-                //}
 
+                Console.WriteLine("X = " + new_point.X + " Y = " + new_point.Y);
                 //Ввод данных для таблиц
                 viewModel.Data_Xdt_X.Collection.Add(new_point);
                 //Коллекция точек для графика axisX = t axisY = X
@@ -243,9 +253,37 @@ namespace WpfApp4
         //              Test для нового алгоритма подсчёта
 
         //Метод Рунге-Кутта 4-го порядка
-        //Сначала тогда пропишем для y'
-        
+        //Y'
+        private double runge_kutta_x(double h, Point start_p, double alpha)
+        {
+            double k1 = function_y(start_p, alpha);
+            double k2 = function_y(new Point(start_p.X + h/2, start_p.Y+h*k1/2), alpha);
+            double k3 = function_y(new Point(start_p.X+h/2, start_p.Y + h*k2/2),alpha);
+            double k4 = function_y(new Point(start_p.X + h, start_p.Y + h * k3), alpha);
 
+            return SetSigFigs(start_p.Y + h * (k1 + 2 * k2 + 2 *k3 + k4)/6,accuracy);
+        }
+        //X'
+        private double runge_kutta_y(double h, Point start_p, double alpha)
+        {
+            double k1 = function_x(start_p, alpha);
+            double k2 = function_x(new Point(start_p.X + h / 2, start_p.Y + h * k1 / 2), alpha);
+            double k3 = function_x(new Point(start_p.X + h / 2, start_p.Y + h * k2 / 2), alpha);
+            double k4 = function_x(new Point(start_p.X + h, start_p.Y + h * k3), alpha);
+
+            return SetSigFigs(start_p.X + h * (k1 + 2 * k2 + 2 * k3 + k4) / 6, accuracy);
+        }
+
+        //Функция для x'
+        private double function_x(Point p, double alpha)
+        {
+            return SetSigFigs(p.Y,accuracy);
+        }
+        //Функция для y'
+        private double function_y(Point p, double alpha)
+        {
+            return SetSigFigs(-alpha * (1 - p.X * p.X) * p.Y - p.X, accuracy);
+        }
 
 
 
