@@ -29,6 +29,8 @@ namespace WpfApp4
 
         int accuracy =3 ;
 
+        int ChechMethod = 0;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -36,11 +38,6 @@ namespace WpfApp4
             viewModel = new MyViewModel();
             dataLine = new DataLine();
             DataContext = viewModel;
-
-            //test dictionary
-            //Dictionary<string, ComplexNumber> lambda = new Dictionary<string, ComplexNumber>();
-            //lambda.Add("Lambda1", new ComplexNumber { real = 1, imaginary = 2 });
-
 
         }
 
@@ -152,7 +149,7 @@ namespace WpfApp4
             //double h = 0.1;
             Point new_point = start_point;
 
-            if (choice)
+            if (ChechMethod == 1)
             {
                 new_point = function_get_new_point(start_point, alpha);
             }
@@ -164,8 +161,8 @@ namespace WpfApp4
             }
 
             viewModel.Data_Xdt_X.Collection.Add(new_point);
-
-            for (double t = 0.001; t < int.Parse(CountN.Text); t=t+0.001)
+            double step = double.Parse(((ComboBoxItem)ComboBoxStep.SelectedItem).Content.ToString());
+            for (double t = step; t < int.Parse(CountN.Text); t=t+step)
             {
                 //test ограничение на размеры
                 if (new_point.X > 5000000 || new_point.Y > 500000) return;
@@ -207,7 +204,7 @@ namespace WpfApp4
                     //double yt = SetSigFigs(lambda_1_2[0]*xt + Math.Exp(lambda_1_2[0]*t)*(-const_1_2[0]*lambda_1_2[1]*Math.Sin(lambda_1_2[1]*t) + const_1_2[1]*lambda_1_2[1]*Math.Cos(lambda_1_2[1]*t)), accuracy);
                 }
                 
-                if (choice)
+                if (ChechMethod == 1)
                 {
                     //Разностный метод
                     new_point = function_get_new_point(new_point, alpha);
@@ -273,7 +270,6 @@ namespace WpfApp4
 
             Console.WriteLine("Шаг x " + h + " k1 " + x1 + " k2 " + x2 + " k3 " + x3 + " k4 " + x4);
             Console.WriteLine("Шаг y " + h + " k1 " + y1 + " k2 " + y2 + " k3 " + y3 + " k4 " + y4);
-            //Console.WriteLine("Результат " + SetSigFigs(start_p.X + h * (x + 2.0 * k2 + 2.0 * k3 + k4) / 6.0, accuracy));
 
             double[] rezult = new double[2];
             rezult[0] = SetSigFigs(start_p.X + h * (x1 + 2.0 * x2 + 2.0 * x3 + x4) / 6.0, accuracy);
@@ -281,19 +277,6 @@ namespace WpfApp4
 
             return rezult;
         }
-        //X'
-        //private double runge_kutta_x(double h, Point start_p, double alpha)
-        //{
-        //    double k1 = function_x(start_p, alpha);
-        //    double k2 = function_x(new Point(start_p.X + h / 2.0, start_p.Y + h * k1 / 2.0), alpha);
-        //    double k3 = function_x(new Point(start_p.X + h / 2.0, start_p.Y + h * k2 / 2.0), alpha);
-        //    double k4 = function_x(new Point(start_p.X + h, start_p.Y + h * k3), alpha);
-        //    Console.WriteLine("!!!             X           !!!");
-        //    Console.WriteLine("Шаг " + h + "k1 " + k1 + "k2 " + k2 + "k3 " + k3 + "k4 " + k4);
-        //    Console.WriteLine("Результат "+ SetSigFigs(start_p.X + h * (k1 + 2.0 * k2 + 2.0 * k3 + k4) / 6.0, accuracy));
-
-        //    return SetSigFigs(start_p.X + h * (k1 + 2.0 * k2 + 2.0 * k3 + k4) / 6.0, accuracy);
-        //}
 
         //Функция для x'
         private double function_x(Point p, double alpha)
@@ -364,6 +347,13 @@ namespace WpfApp4
 
             //Очищаем количество линий
             dataLine.CountLine = 0;
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton pressed = (RadioButton)sender;
+            if (pressed.Content.ToString() == "Метод Эйлера") ChechMethod = 1;
+            else ChechMethod = 2;
         }
     }
 }
