@@ -149,7 +149,7 @@ namespace WpfApp4
             //выбор метода реализации
             bool choice = false;
             //Метод Рунге-Кутта
-            double h = 0.1;
+            //double h = 0.1;
             Point new_point = start_point;
 
             if (choice)
@@ -158,13 +158,13 @@ namespace WpfApp4
             }
             else
             {
-                new_point.X = runge_kutta_x(h, start_point, alpha);
-                new_point.Y = runge_kutta_y(h, start_point, alpha);
+                new_point.X = runge_kutta_x(0, start_point, alpha);
+                new_point.Y = runge_kutta_y(0, start_point, alpha);
             }
 
             viewModel.Data_Xdt_X.Collection.Add(new_point);
 
-            for (double t = 0; t < int.Parse(CountN.Text); t=t+0.1)
+            for (double t = 0.1; t < int.Parse(CountN.Text); t=t+0.1)
             {
                 //test ограничение на размеры
                 if (new_point.X > 5000000 || new_point.Y > 500000) return;
@@ -215,9 +215,10 @@ namespace WpfApp4
                 {
                     //Метод Рунге-Кутта
                     Point variable_point = new_point;
-                    new_point.X = runge_kutta_x(h, variable_point, alpha);
-                    new_point.Y = runge_kutta_y(h, variable_point, alpha);
+                    new_point.X = runge_kutta_x(t, variable_point, alpha);
+                    new_point.Y = runge_kutta_y(t, variable_point, alpha);
                 }
+                
 
 
                 Console.WriteLine("X = " + new_point.X + " Y = " + new_point.Y);
@@ -254,24 +255,31 @@ namespace WpfApp4
 
         //Метод Рунге-Кутта 4-го порядка
         //Y'
-        private double runge_kutta_x(double h, Point start_p, double alpha)
+        private double runge_kutta_y(double h, Point start_p, double alpha)
         {
             double k1 = function_y(start_p, alpha);
-            double k2 = function_y(new Point(start_p.X + h/2, start_p.Y+h*k1/2), alpha);
-            double k3 = function_y(new Point(start_p.X+h/2, start_p.Y + h*k2/2),alpha);
+            double k2 = function_y(new Point(start_p.X + h/2.0, start_p.Y+h*k1/2.0), alpha);
+            double k3 = function_y(new Point(start_p.X+h/2.0, start_p.Y + h*k2/2.0),alpha);
             double k4 = function_y(new Point(start_p.X + h, start_p.Y + h * k3), alpha);
+
+            Console.WriteLine("!!!             Y           !!!");
+            Console.WriteLine("Шаг " + h + "k1 " + k1 + "k2 " + k2 + "k3 " + k3 + "k4 " + k4);
+            Console.WriteLine("Результат " + SetSigFigs(start_p.X + h * (k1 + 2.0 * k2 + 2.0 * k3 + k4) / 6.0, accuracy));
 
             return SetSigFigs(start_p.Y + h * (k1 + 2 * k2 + 2 *k3 + k4)/6,accuracy);
         }
         //X'
-        private double runge_kutta_y(double h, Point start_p, double alpha)
+        private double runge_kutta_x(double h, Point start_p, double alpha)
         {
             double k1 = function_x(start_p, alpha);
-            double k2 = function_x(new Point(start_p.X + h / 2, start_p.Y + h * k1 / 2), alpha);
-            double k3 = function_x(new Point(start_p.X + h / 2, start_p.Y + h * k2 / 2), alpha);
+            double k2 = function_x(new Point(start_p.X + h / 2.0, start_p.Y + h * k1 / 2.0), alpha);
+            double k3 = function_x(new Point(start_p.X + h / 2.0, start_p.Y + h * k2 / 2.0), alpha);
             double k4 = function_x(new Point(start_p.X + h, start_p.Y + h * k3), alpha);
+            Console.WriteLine("!!!             X           !!!");
+            Console.WriteLine("Шаг " + h + "k1 " + k1 + "k2 " + k2 + "k3 " + k3 + "k4 " + k4);
+            Console.WriteLine("Результат "+ SetSigFigs(start_p.X + h * (k1 + 2.0 * k2 + 2.0 * k3 + k4) / 6.0, accuracy));
 
-            return SetSigFigs(start_p.X + h * (k1 + 2 * k2 + 2 * k3 + k4) / 6, accuracy);
+            return SetSigFigs(start_p.X + h * (k1 + 2.0 * k2 + 2.0 * k3 + k4) / 6.0, accuracy);
         }
 
         //Функция для x'
