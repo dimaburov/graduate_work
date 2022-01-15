@@ -128,8 +128,13 @@ namespace WpfApp4
         {
             double alpha = double.Parse(TextBoxAlpha.Text);
 
+            //Стартовые значения на графике
             Point start_point = new Point(double.Parse(TextBoxX0.Text), double.Parse(TextBoxY0.Text));
             viewModel.Data_Xdt_X.Collection.Add(start_point);
+            //Коллекция точек для графика axisX = t axisY = X
+            viewModel.Data_Xdt_t.Collection.Add(new Point(0, start_point.X));
+            //Коллекция точек для графика axisX = t axisY = Y
+            viewModel.Data_X_t.Collection.Add(new Point(0, start_point.Y));
 
             //Коллекция точек для графика axisX = t axisY = X
             //viewModel.Data_X_t.Collection.Add(new Point(0, double.Parse(TextBoxX0.Text)));
