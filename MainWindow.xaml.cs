@@ -165,7 +165,7 @@ namespace WpfApp4
 
             viewModel.Data_Xdt_X.Collection.Add(new_point);
 
-            for (double t = 0.1; t < int.Parse(CountN.Text); t=t+0.1)
+            for (double t = 0.001; t < int.Parse(CountN.Text); t=t+0.001)
             {
                 //test ограничение на размеры
                 if (new_point.X > 5000000 || new_point.Y > 500000) return;
@@ -216,7 +216,7 @@ namespace WpfApp4
                 {
                     //Метод Рунге-Кутта
                     Point variable_point = new_point;
-                    double[] runge_kutte = runge_kutta(t, start_point, alpha);
+                    double[] runge_kutte = runge_kutta(t, new_point, alpha);
                     new_point.X = runge_kutte[0];
                     new_point.Y = runge_kutte[1];
                 }
@@ -259,27 +259,25 @@ namespace WpfApp4
         //Y'
         private double[] runge_kutta(double h, Point start_p, double alpha)
         {
-            double x1 = h*function_x(start_p, alpha);
-            double y1 = h * function_y(start_p, alpha);
+            double x1 = function_x(start_p, alpha);
+            double y1 = function_y(start_p, alpha);
 
-            double x2 = h * function_x(new Point(start_p.X + x1 / 2.0, start_p.Y + y1/ 2.0), alpha);
-            double y2 = h * function_y(new Point(start_p.X + x1/2.0, start_p.Y+ y1/2.0), alpha);
+            double x2 = function_x(new Point(start_p.X + h / 2.0, start_p.Y + h*x1/ 2.0), alpha);
+            double y2 = function_y(new Point(start_p.X + h/2.0, start_p.Y+ h * y1 /2.0), alpha);
 
-            double x3 = h * function_x(new Point(start_p.X + x2 / 2.0, start_p.Y + y2/ 2.0), alpha);
-            double y3 = h * function_y(new Point(start_p.X + x2 / 2.0, start_p.Y + y2/ 2.0), alpha);
+            double x3 = function_x(new Point(start_p.X + h / 2.0, start_p.Y + h * x2 / 2.0), alpha);
+            double y3 = function_y(new Point(start_p.X + h / 2.0, start_p.Y + h * y2 / 2.0), alpha);
 
-            double x4 = h * function_x(new Point(start_p.X + x3, start_p.Y + y3), alpha);
-            double y4 = h * function_y(new Point(start_p.X + x3, start_p.Y + y3), alpha);
+            double x4 = function_x(new Point(start_p.X + h, start_p.Y + h * x3), alpha);
+            double y4 = function_y(new Point(start_p.X + h, start_p.Y + h * y3), alpha);
 
             Console.WriteLine("Шаг x " + h + " k1 " + x1 + " k2 " + x2 + " k3 " + x3 + " k4 " + x4);
-            Console.WriteLine("Шаг y " + h + " k1 " + y1 + " k2 " + y2 + " k3 " + y3 + " y4 " + x4);
-            Console.WriteLine("Результат x " + SetSigFigs(start_p.X + (x1 + 2.0 * x2 + 2.0 * x3 + x4) / 6.0, accuracy));
-            Console.WriteLine("Результат y " + SetSigFigs(start_p.Y + (y1 + 2.0 * y2 + 2.0 * y3 + y4) / 6.0, accuracy));
+            Console.WriteLine("Шаг y " + h + " k1 " + y1 + " k2 " + y2 + " k3 " + y3 + " k4 " + y4);
             //Console.WriteLine("Результат " + SetSigFigs(start_p.X + h * (x + 2.0 * k2 + 2.0 * k3 + k4) / 6.0, accuracy));
 
             double[] rezult = new double[2];
-            rezult[0] = SetSigFigs(start_p.X + (x1 + 2.0 * x2 + 2.0 * x3 + x4) / 6.0, accuracy);
-            rezult[1] = SetSigFigs(start_p.Y + (y1 + 2.0 * y2 + 2.0 * y3 + y4) / 6.0, accuracy);
+            rezult[0] = SetSigFigs(start_p.X + h * (x1 + 2.0 * x2 + 2.0 * x3 + x4) / 6.0, accuracy);
+            rezult[1] = SetSigFigs(start_p.Y + h * (y1 + 2.0 * y2 + 2.0 * y3 + y4) / 6.0, accuracy);
 
             return rezult;
         }
