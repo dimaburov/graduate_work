@@ -143,8 +143,6 @@ namespace WpfApp4
             double[] lambda_1_2 = calculation_lambda(alpha);
             double[] const_1_2 = calculation_const(double.Parse(TextBoxX0.Text), double.Parse(TextBoxY0.Text), lambda_1_2[0], lambda_1_2[1]);
 
-            //выбор метода реализации
-            bool choice = false;
             //Метод Рунге-Кутта
             //double h = 0.1;
             Point new_point = start_point;
@@ -153,11 +151,15 @@ namespace WpfApp4
             {
                 new_point = function_get_new_point(start_point, alpha);
             }
-            else
+            else if(ChechMethod == 2)
             {
                 double[] runge_kutte = runge_kutta(0, start_point, alpha);
                 new_point.X = runge_kutte[0];
                 new_point.Y = runge_kutte[1];
+            }
+            else
+            {
+                new_point = runge_kutta_2(0, start_point, alpha);
             }
 
             viewModel.Data_Xdt_X.Collection.Add(new_point);
@@ -209,13 +211,18 @@ namespace WpfApp4
                     //Разностный метод
                     new_point = function_get_new_point(new_point, alpha);
                 }
-                else
+                else if (ChechMethod == 2)
                 {
-                    //Метод Рунге-Кутта
+                    //Метод Рунге-Кутта 4
                     Point variable_point = new_point;
-                    double[] runge_kutte = runge_kutta(t, new_point, alpha);
+                    double[] runge_kutte = runge_kutta(step, new_point, alpha);
                     new_point.X = runge_kutte[0];
                     new_point.Y = runge_kutte[1];
+                }
+                else
+                {
+                    //Метод Рунге-Кутта 2 
+                    new_point = runge_kutta_2(step, new_point, alpha);
                 }
                 
 
@@ -253,7 +260,16 @@ namespace WpfApp4
         //              Test для новых алгоритмов подсчёта
 
         //Метод Рунге-Кутты 2-го порядка
+        private Point runge_kutta_2(double h, Point p, double alpha)
+        {
+            double new_x = p.X + h * function_x(p, alpha);
+            double new_y = p.Y + h * function_y(p, alpha);
 
+            double x = p.X + h * (function_x(p, alpha) + function_x(new Point(new_x, p.Y), alpha)) / 2;
+            double y = p.Y + h * (function_y(p, alpha) + function_y(new Point(p.X, new_y), alpha)) / 2;
+
+            return new Point(SetSigFigs(x,accuracy), SetSigFigs(y,accuracy));
+        }
 
         //Метод Рунге-Кутта 4-го порядка
         //Y'
@@ -360,7 +376,8 @@ namespace WpfApp4
         {
             RadioButton pressed = (RadioButton)sender;
             if (pressed.Content.ToString() == "Метод Эйлера") ChechMethod = 1;
-            else ChechMethod = 2;
+            else if(pressed.Content.ToString() == "Метод Рунге-Кутта 4-го") ChechMethod = 2;
+            else ChechMethod = 3;
         }
     }
 }
