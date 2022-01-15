@@ -277,17 +277,17 @@ namespace WpfApp4
         {
             double step = double.Parse(((ComboBoxItem)ComboBoxStep.SelectedItem).Content.ToString());
 
-            double x1 = step*function_x(start_p, alpha);
-            double y1 = step * function_y(start_p, alpha);
+            double x1 = function_x(start_p, alpha);
+            double y1 = function_y(start_p, alpha);
 
-            double x2 = step * function_x(new Point(start_p.X + h *x1/ 2.0, start_p.Y + h*y1/ 2.0), alpha);
-            double y2 = step * function_y(new Point(start_p.X + h*x1/2.0, start_p.Y+ h * y1 /2.0), alpha);
+            double x2 = function_x(new Point(start_p.X + step * x1/ 2.0, start_p.Y + step/ 2.0), alpha);
+            double y2 = function_y(new Point(start_p.X + step/2.0, start_p.Y+ step * y1 /2.0), alpha);
 
-            double x3 = step * function_x(new Point(start_p.X + h*x2 / 2.0, start_p.Y + h*y2 / 2.0), alpha);
-            double y3 = step * function_y(new Point(start_p.X + h *x2/ 2.0, start_p.Y + h * y2 / 2.0), alpha);
+            double x3 = function_x(new Point(start_p.X + step * x2 / 2.0, start_p.Y + step / 2.0), alpha);
+            double y3 = function_y(new Point(start_p.X + step / 2.0, start_p.Y + step * y2 / 2.0), alpha);
 
-            double x4 = step * function_x(new Point(start_p.X + h*x3, start_p.Y + h*y3 ), alpha);
-            double y4 = step * function_y(new Point(start_p.X + h*x3, start_p.Y + h * y3), alpha);
+            double x4 = function_x(new Point(start_p.X + step * x3, start_p.Y + step ), alpha);
+            double y4 = function_y(new Point(start_p.X + step, start_p.Y + step * y3), alpha);
 
             Console.WriteLine("Шаг x " + h + " k1 " + x1 + " k2 " + x2 + " k3 " + x3 + " k4 " + x4);
             Console.WriteLine("Шаг y " + h + " k1 " + y1 + " k2 " + y2 + " k3 " + y3 + " k4 " + y4);
@@ -295,8 +295,8 @@ namespace WpfApp4
             double[] rezult = new double[2];
             if (x4 > 50000) return rezult;
             if (y4 > 50000) return rezult;
-            rezult[0] = SetSigFigs(start_p.X + (x1 + 2.0 * x2 + 2.0 * x3 + x4) / 6.0, accuracy);
-            rezult[1] = SetSigFigs(start_p.Y + (y1 + 2.0 * y2 + 2.0 * y3 + y4) / 6.0, accuracy);
+            rezult[0] = SetSigFigs(start_p.X + step*(x1 + 2.0 * x2 + 2.0 * x3 + x4) / 6.0, accuracy);
+            rezult[1] = SetSigFigs(start_p.Y + step*(y1 + 2.0 * y2 + 2.0 * y3 + y4) / 6.0, accuracy);
 
             return rezult;
         }
