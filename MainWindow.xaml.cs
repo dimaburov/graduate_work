@@ -250,30 +250,37 @@ namespace WpfApp4
             return new_point;
         }
 
-        //              Test для нового алгоритма подсчёта
+        //              Test для новых алгоритмов подсчёта
+
+        //Метод Рунге-Кутты 2-го порядка
+
 
         //Метод Рунге-Кутта 4-го порядка
         //Y'
         private double[] runge_kutta(double h, Point start_p, double alpha)
         {
-            double x1 = function_x(start_p, alpha);
-            double y1 = function_y(start_p, alpha);
+            double step = double.Parse(((ComboBoxItem)ComboBoxStep.SelectedItem).Content.ToString());
 
-            double x2 = function_x(new Point(start_p.X + h / 2.0, start_p.Y + h*x1/ 2.0), alpha);
-            double y2 = function_y(new Point(start_p.X + h/2.0, start_p.Y+ h * y1 /2.0), alpha);
+            double x1 = step*function_x(start_p, alpha);
+            double y1 = step * function_y(start_p, alpha);
 
-            double x3 = function_x(new Point(start_p.X + h / 2.0, start_p.Y + h * x2 / 2.0), alpha);
-            double y3 = function_y(new Point(start_p.X + h / 2.0, start_p.Y + h * y2 / 2.0), alpha);
+            double x2 = step * function_x(new Point(start_p.X + h *x1/ 2.0, start_p.Y + h*y1/ 2.0), alpha);
+            double y2 = step * function_y(new Point(start_p.X + h*x1/2.0, start_p.Y+ h * y1 /2.0), alpha);
 
-            double x4 = function_x(new Point(start_p.X + h, start_p.Y + h * x3), alpha);
-            double y4 = function_y(new Point(start_p.X + h, start_p.Y + h * y3), alpha);
+            double x3 = step * function_x(new Point(start_p.X + h*x2 / 2.0, start_p.Y + h*y2 / 2.0), alpha);
+            double y3 = step * function_y(new Point(start_p.X + h *x2/ 2.0, start_p.Y + h * y2 / 2.0), alpha);
+
+            double x4 = step * function_x(new Point(start_p.X + h*x3, start_p.Y + h*y3 ), alpha);
+            double y4 = step * function_y(new Point(start_p.X + h*x3, start_p.Y + h * y3), alpha);
 
             Console.WriteLine("Шаг x " + h + " k1 " + x1 + " k2 " + x2 + " k3 " + x3 + " k4 " + x4);
             Console.WriteLine("Шаг y " + h + " k1 " + y1 + " k2 " + y2 + " k3 " + y3 + " k4 " + y4);
 
             double[] rezult = new double[2];
-            rezult[0] = SetSigFigs(start_p.X + h * (x1 + 2.0 * x2 + 2.0 * x3 + x4) / 6.0, accuracy);
-            rezult[1] = SetSigFigs(start_p.Y + h * (y1 + 2.0 * y2 + 2.0 * y3 + y4) / 6.0, accuracy);
+            if (x4 > 50000) return rezult;
+            if (y4 > 50000) return rezult;
+            rezult[0] = SetSigFigs(start_p.X + (x1 + 2.0 * x2 + 2.0 * x3 + x4) / 6.0, accuracy);
+            rezult[1] = SetSigFigs(start_p.Y + (y1 + 2.0 * y2 + 2.0 * y3 + y4) / 6.0, accuracy);
 
             return rezult;
         }
