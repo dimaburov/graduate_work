@@ -41,13 +41,6 @@
         <RadioButton x:Name="DifferenceMethod" GroupName ="VariableMethod" Content="Метод Эйлера" HorizontalAlignment="Left" Margin="582,415,0,0" VerticalAlignment="Top"  Checked="RadioButton_Checked"/>
         <RadioButton x:Name="RungeKuttaMethod" GroupName ="VariableMethod" Content="Метод Рунге-Кутта 4-го" HorizontalAlignment="Left" Margin="582,466,0,0" VerticalAlignment="Top"  Checked="RadioButton_Checked"/>
         <RadioButton x:Name="RungeKuttaMethod_Copy" GroupName ="VariableMethod" Content="Метод Рунге-Кутта 2-го" HorizontalAlignment="Left" Margin="582,441,0,0" VerticalAlignment="Top"  Checked="RadioButton_Checked"/>
-        <TextBlock Height="19" Margin="870,475,99,0" TextWrapping="Wrap" Text="Step" VerticalAlignment="Top" FontSize="16"/>
-        <ComboBox x:Name="ComboBoxStep" HorizontalAlignment="Left" Height="21" Margin="907,476,0,0" VerticalAlignment="Top" Width="62">
-            <ComboBoxItem IsSelected="True" Content="0,1"/>
-            <ComboBoxItem Content="0,01"/>
-            <ComboBoxItem Content="0,001"/>
-        </ComboBox>
-
 
     </Grid>
 </Window>

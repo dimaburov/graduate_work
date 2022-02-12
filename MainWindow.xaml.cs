@@ -65,12 +65,6 @@ namespace WpfApp4
             //Линия для основного графика
             LineGraph line_main_graph = new LineGraph();
 
-            //Выбор данных для рисования - ПОКА В КОММЕНТЕ
-            //if (Graph_dXdt_X.IsChecked == true) line_main_graph = Drow_Line(viewModel.Data_Xdt_X, random_color_line);
-            //if (Graph_dXdt_dtdt.IsChecked == true) line_main_graph = Drow_Line(viewModel.Data_Xdt_Ydt, random_color_line);
-
-            //Определение прозрачная линия или нет
-
             //Определяем включени/выключение линий
             int line_check = 0;
 
@@ -136,13 +130,7 @@ namespace WpfApp4
             //Коллекция точек для графика axisX = t axisY = Y
             viewModel.Data_X_t.Collection.Add(new Point(0, start_point.Y));
 
-            //Коллекция точек для графика axisX = t axisY = X
-            //viewModel.Data_X_t.Collection.Add(new Point(0, double.Parse(TextBoxX0.Text)));
-
             //временные ограничения на отображение точек
-
-            //!!очень тестово изменю параметр t
-            // !!сделать выбор ля значения 0.1 
 
 
             double[] lambda_1_2 = calculation_lambda(alpha);
@@ -168,7 +156,7 @@ namespace WpfApp4
             }
 
             viewModel.Data_Xdt_X.Collection.Add(new_point);
-            double step = double.Parse(((ComboBoxItem)ComboBoxStep.SelectedItem).Content.ToString());
+            double step = double.Parse(((ComboBoxItem)ComboBoxTue.SelectedItem).Content.ToString());
             for (double t = step; t < int.Parse(CountN.Text); t=t+step)
             {
                 //test ограничение на размеры
@@ -219,7 +207,6 @@ namespace WpfApp4
                 else if (ChechMethod == 2)
                 {
                     //Метод Рунге-Кутта 4
-                    Point variable_point = new_point;
                     double[] runge_kutte = runge_kutta(step, new_point, alpha);
                     new_point.X = runge_kutte[0];
                     new_point.Y = runge_kutte[1];
@@ -239,8 +226,6 @@ namespace WpfApp4
                 viewModel.Data_Xdt_t.Collection.Add(new Point(t, new_point.X));
                 //Коллекция точек для графика axisX = t axisY = Y
                 viewModel.Data_X_t.Collection.Add(new Point(t, new_point.Y));
-
-
             }
         }
 
@@ -262,8 +247,6 @@ namespace WpfApp4
             return new_point;
         }
 
-        //              Test для новых алгоритмов подсчёта
-
         //Метод Рунге-Кутты 2-го порядка
         private Point runge_kutta_2(double h, Point p, double alpha)
         {
@@ -280,7 +263,7 @@ namespace WpfApp4
         //Y'
         private double[] runge_kutta(double h, Point start_p, double alpha)
         {
-            double step = double.Parse(((ComboBoxItem)ComboBoxStep.SelectedItem).Content.ToString());
+            double step = double.Parse(((ComboBoxItem)ComboBoxTue.SelectedItem).Content.ToString());
 
             double x1 = function_x(start_p, alpha);
             double y1 = function_y(start_p, alpha);
