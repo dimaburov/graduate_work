@@ -60,6 +60,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MethodEulera.cs" />
+    <Compile Include="RungeKutta2.cs" />
+    <Compile Include="RungeKutta4.cs" />
+    <Compile Include="SetSigFigs.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -68,6 +72,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CalculatingPoints.cs" />
     <Compile Include="ComplexNumber.cs" />
     <Compile Include="DataLine.cs" />
     <Compile Include="MainWindow.xaml.cs">
