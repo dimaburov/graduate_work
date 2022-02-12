@@ -140,23 +140,24 @@ namespace WpfApp4
             //double h = 0.1;
             Point new_point = start_point;
 
+            double step = double.Parse(((ComboBoxItem)ComboBoxTue.SelectedItem).Content.ToString());
+
             if (ChechMethod == 1)
             {
-                new_point = function_get_new_point(start_point, alpha);
+                new_point = method_eulera(step, start_point, alpha);
             }
             else if (ChechMethod == 2)
             {
-                double[] runge_kutte = runge_kutta(0, start_point, alpha);
+                double[] runge_kutte = runge_kutta(step, start_point, alpha);
                 new_point.X = runge_kutte[0];
                 new_point.Y = runge_kutte[1];
             }
             else
             {
-                new_point = runge_kutta_2(0, start_point, alpha);
+                new_point = runge_kutta_2(step, start_point, alpha);
             }
 
             viewModel.Data_Xdt_X.Collection.Add(new_point);
-            double step = double.Parse(((ComboBoxItem)ComboBoxTue.SelectedItem).Content.ToString());
             for (double t = step; t < int.Parse(CountN.Text); t = t + step)
             {
                 //test ограничение на размеры
@@ -201,8 +202,8 @@ namespace WpfApp4
 
                 if (ChechMethod == 1)
                 {
-                    //Разностный метод
-                    new_point = function_get_new_point(new_point, alpha);
+                    //Метод Эйлера
+                    new_point = method_eulera(step,new_point, alpha);
                 }
                 else if (ChechMethod == 2)
                 {
@@ -230,12 +231,11 @@ namespace WpfApp4
         }
 
         //Функция вычисления точек
-        private Point function_get_new_point(Point p, double alpha)
+        private Point method_eulera(double tau, Point p, double alpha)
         {
             //            Function
             // dx/dt = y
             // dy/dt = -alpha(1 - x^2)*y - x
-            double tau = double.Parse(((ComboBoxItem)ComboBoxTue.SelectedItem).Content.ToString());
             {
                 //test value
                 Console.WriteLine("X = " + SetSigFigs(p.X + tau * p.Y, accuracy) + " Y = " + SetSigFigs(p.Y + tau * (-alpha * (1 - p.X * p.X) * p.Y - p.X), accuracy));
