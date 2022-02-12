@@ -27,7 +27,7 @@ namespace WpfApp4
         MyViewModel viewModel;
         DataLine dataLine;
 
-        int accuracy =3 ;
+        int accuracy = 3;
 
         int ChechMethod = 0;
 
@@ -72,12 +72,12 @@ namespace WpfApp4
             else line_check = 1;
 
             //              Рисуем линии
-            
+
             CanvasDrow.AddLineGraph(viewModel.Data_Xdt_X,
                                     new Pen(GetColor(random_color_line), line_check),
                                     new CirclePointMarker { Size = 5.0, Fill = GetColor(random_color_line) },
-                                    new PenDescription("x'' + "+ double.Parse(TextBoxAlpha.Text) + "(1-x^2)x' + x =0, n = "+ int.Parse(CountN.Text)));
-            
+                                    new PenDescription("x'' + " + double.Parse(TextBoxAlpha.Text) + "(1-x^2)x' + x =0, n = " + int.Parse(CountN.Text)));
+
             //Меняем рисование дополнительного графика
             //Линия Y t
             CanvasDrowTime.AddLineGraph(viewModel.Data_X_t,
@@ -86,7 +86,7 @@ namespace WpfApp4
             //Второй график для дополнительного графа
             //Линия X t
             CanvasDrowTime.AddLineGraph(viewModel.Data_Xdt_t,
-                                   new Pen(GetColor(random_color_line+1), 1),
+                                   new Pen(GetColor(random_color_line + 1), 1),
                                    new PenDescription("X x'' + " + double.Parse(TextBoxAlpha.Text) + "(1-x^2)x' + x =0, n = " + int.Parse(CountN.Text)));
             //Увеличиваем количество линий
             dataLine.CountLine = dataLine.CountLine + 1;
@@ -144,7 +144,7 @@ namespace WpfApp4
             {
                 new_point = function_get_new_point(start_point, alpha);
             }
-            else if(ChechMethod == 2)
+            else if (ChechMethod == 2)
             {
                 double[] runge_kutte = runge_kutta(0, start_point, alpha);
                 new_point.X = runge_kutte[0];
@@ -157,7 +157,7 @@ namespace WpfApp4
 
             viewModel.Data_Xdt_X.Collection.Add(new_point);
             double step = double.Parse(((ComboBoxItem)ComboBoxTue.SelectedItem).Content.ToString());
-            for (double t = step; t < int.Parse(CountN.Text); t=t+step)
+            for (double t = step; t < int.Parse(CountN.Text); t = t + step)
             {
                 //test ограничение на размеры
                 if (new_point.X > 5000000 || new_point.Y > 500000) return;
@@ -198,7 +198,7 @@ namespace WpfApp4
                     //double xt = SetSigFigs(Math.Exp(lambda_1_2[0]*t)*(const_1_2[0]*Math.Cos(lambda_1_2[1]*t) + const_1_2[1]*Math.Sin(lambda_1_2[1]*t)), accuracy);
                     //double yt = SetSigFigs(lambda_1_2[0]*xt + Math.Exp(lambda_1_2[0]*t)*(-const_1_2[0]*lambda_1_2[1]*Math.Sin(lambda_1_2[1]*t) + const_1_2[1]*lambda_1_2[1]*Math.Cos(lambda_1_2[1]*t)), accuracy);
                 }
-                
+
                 if (ChechMethod == 1)
                 {
                     //Разностный метод
@@ -216,7 +216,7 @@ namespace WpfApp4
                     //Метод Рунге-Кутта 2 
                     new_point = runge_kutta_2(step, new_point, alpha);
                 }
-                
+
 
 
                 Console.WriteLine("X = " + new_point.X + " Y = " + new_point.Y);
@@ -240,7 +240,7 @@ namespace WpfApp4
                 //test value
                 Console.WriteLine("X = " + SetSigFigs(p.X + tau * p.Y, accuracy) + " Y = " + SetSigFigs(p.Y + tau * (-alpha * (1 - p.X * p.X) * p.Y - p.X), accuracy));
             }
-            Point new_point = new Point(SetSigFigs(p.X + tau*p.Y, accuracy), SetSigFigs(p.Y + tau*(-alpha * (1 - p.X * p.X) * p.Y - p.X), accuracy));
+            Point new_point = new Point(SetSigFigs(p.X + tau * p.Y, accuracy), SetSigFigs(p.Y + tau * (-alpha * (1 - p.X * p.X) * p.Y - p.X), accuracy));
 
             //test point
 
@@ -256,35 +256,71 @@ namespace WpfApp4
             double x = p.X + h * (function_x(p, alpha) + function_x(new Point(new_x, p.Y), alpha)) / 2;
             double y = p.Y + h * (function_y(p, alpha) + function_y(new Point(p.X, new_y), alpha)) / 2;
 
-            return new Point(SetSigFigs(x,accuracy), SetSigFigs(y,accuracy));
+            return new Point(SetSigFigs(x, accuracy), SetSigFigs(y, accuracy));
         }
 
+        
+        //Метод Рунге-Кутта 4-го порядка
+        //Y'
+        //private double[] runge_kutta(double h, Point start_p, double alpha)
+        //{
+        //    double step = double.Parse(((ComboBoxItem)ComboBoxTue.SelectedItem).Content.ToString());
+
+        //    double x1 = function_x(start_p, alpha);
+        //    double y1 = function_y(start_p, alpha);
+
+        //    double x2 = function_x(new Point(start_p.X + step * x1/ 2.0, start_p.Y + step/ 2.0), alpha);
+        //    double y2 = function_y(new Point(start_p.X + step/2.0, start_p.Y+ step * y1 /2.0), alpha);
+
+        //    double x3 = function_x(new Point(start_p.X + step * x2 / 2.0, start_p.Y + step / 2.0), alpha);
+        //    double y3 = function_y(new Point(start_p.X + step / 2.0, start_p.Y + step * y2 / 2.0), alpha);
+
+        //    double x4 = function_x(new Point(start_p.X + step * x3, start_p.Y + step ), alpha);
+        //    double y4 = function_y(new Point(start_p.X + step, start_p.Y + step * y3), alpha);
+
+        //    Console.WriteLine("Шаг x " + h + " k1 " + x1 + " k2 " + x2 + " k3 " + x3 + " k4 " + x4);
+        //    Console.WriteLine("Шаг y " + h + " k1 " + y1 + " k2 " + y2 + " k3 " + y3 + " k4 " + y4);
+
+        //    double[] rezult = new double[2];
+
+
+        //    if (x4 > 50000) return rezult;
+        //    if (y4 > 50000) return rezult;
+        //    rezult[0] = SetSigFigs(start_p.X + step*(x1 + 2.0 * x2 + 2.0 * x3 + x4) / 6.0, accuracy);
+        //    rezult[1] = SetSigFigs(start_p.Y + step*(y1 + 2.0 * y2 + 2.0 * y3 + y4) / 6.0, accuracy);
+
+        //    return rezult;
+        //}
+        
+        //test
         //Метод Рунге-Кутта 4-го порядка
         //Y'
         private double[] runge_kutta(double h, Point start_p, double alpha)
         {
             double step = double.Parse(((ComboBoxItem)ComboBoxTue.SelectedItem).Content.ToString());
 
-            double x1 = function_x(start_p, alpha);
-            double y1 = function_y(start_p, alpha);
+            double x1 = SetSigFigs(step *function_x(start_p, alpha), accuracy);
+            double y1 = SetSigFigs(step * function_y(start_p, alpha), accuracy);
 
-            double x2 = function_x(new Point(start_p.X + step * x1/ 2.0, start_p.Y + step/ 2.0), alpha);
-            double y2 = function_y(new Point(start_p.X + step/2.0, start_p.Y+ step * y1 /2.0), alpha);
+            double x2 = SetSigFigs(step * function_x(new Point(start_p.X + x1 / 2.0, start_p.Y + y1 / 2.0), alpha), accuracy);
+            double y2 = SetSigFigs(step * function_y(new Point(start_p.X + x1 / 2.0, start_p.Y + y1 / 2.0), alpha), accuracy);
 
-            double x3 = function_x(new Point(start_p.X + step * x2 / 2.0, start_p.Y + step / 2.0), alpha);
-            double y3 = function_y(new Point(start_p.X + step / 2.0, start_p.Y + step * y2 / 2.0), alpha);
+            double x3 = SetSigFigs(step * function_x(new Point(start_p.X + x2 / 2.0, start_p.Y + y2 / 2.0), alpha), accuracy);
+            double y3 = SetSigFigs(step * function_y(new Point(start_p.X + x2 / 2.0, start_p.Y + y2 / 2.0), alpha), accuracy);
 
-            double x4 = function_x(new Point(start_p.X + step * x3, start_p.Y + step ), alpha);
-            double y4 = function_y(new Point(start_p.X + step, start_p.Y + step * y3), alpha);
+            double x4 = SetSigFigs(step * function_x(new Point(start_p.X + x3, start_p.Y + y3), alpha), accuracy);
+            double y4 = SetSigFigs(step * function_y(new Point(start_p.X + x3, start_p.Y + y3), alpha), accuracy);
 
             Console.WriteLine("Шаг x " + h + " k1 " + x1 + " k2 " + x2 + " k3 " + x3 + " k4 " + x4);
             Console.WriteLine("Шаг y " + h + " k1 " + y1 + " k2 " + y2 + " k3 " + y3 + " k4 " + y4);
 
             double[] rezult = new double[2];
+
+
             if (x4 > 50000) return rezult;
             if (y4 > 50000) return rezult;
-            rezult[0] = SetSigFigs(start_p.X + step*(x1 + 2.0 * x2 + 2.0 * x3 + x4) / 6.0, accuracy);
-            rezult[1] = SetSigFigs(start_p.Y + step*(y1 + 2.0 * y2 + 2.0 * y3 + y4) / 6.0, accuracy);
+            rezult[0] = SetSigFigs(start_p.X + (x1 + 2.0 * x2 + 2.0 * x3 + x4) / 6.0, accuracy);
+            rezult[1] = SetSigFigs(start_p.Y + (y1 + 2.0 * y2 + 2.0 * y3 + y4) / 6.0, accuracy);
 
             return rezult;
         }
