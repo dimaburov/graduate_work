@@ -15,3 +15,7 @@ C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\WpfApp4.csproj.CoreCo
 C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\WpfApp4.csproj.CopyComplete
 C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\WpfApp4.exe
 C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\WpfApp4.pdb
+C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\VanDerPol.g.cs
+C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\VanDerPol.baml
+C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\WithADelay.g.cs
+C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\WithADelay.baml
