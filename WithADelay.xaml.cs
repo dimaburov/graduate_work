@@ -41,6 +41,8 @@ namespace WpfApp4
         
         private void Button_Drow_Click(object sender, RoutedEventArgs e)
         {
+            //Считаем точки для новой линии
+            Data_Source();
             //              Рисуем линию по полученым точкам
 
             //Будем случайно выбирать цвет
@@ -90,6 +92,19 @@ namespace WpfApp4
             return Brushes.Blue;
         }
 
+        private void Data_Source()
+        {
+            FileDataReader data_file = new FileDataReader();
+
+            double r = double.Parse(r_value.Text);
+            double tue = double.Parse(((ComboBoxItem)ComboBoxTueDelay.SelectedItem).Content.ToString());
+            List<double> array_data = data_file.readerFile();
+
+            /*В метод Calucaltion доабвить r
+             * Доабвить выбор новго метода
+             * Прописать логику для получения новой точки
+            */
+        }
         private void Button_Delete_Click(object sender, RoutedEventArgs e)
         {
 
@@ -107,6 +122,24 @@ namespace WpfApp4
             }
             //Очищаем количество линий
             dataLine.CountLine = 0;
+        }
+
+        private void Selective_Data_Modification(object sender, RoutedEventArgs e)
+        {
+            string error_message = ""; 
+            FileDataReader data_file = new FileDataReader();
+            double tue = double.Parse(((ComboBoxItem)ComboBoxTueDelay.SelectedItem).Content.ToString());
+            error_message =  data_file.selectiveChange(int.Parse((1 / tue).ToString()));
+
+            if (error_message != "") MessageBox.Show(error_message);
+        }
+
+        //Заполняем файл одинаковыми значениями
+        private void Fill_With_The_Same_Values(object sender, RoutedEventArgs e)
+        {
+            FileDataReader data_file = new FileDataReader();
+            double tue = double.Parse(((ComboBoxItem)ComboBoxTueDelay.SelectedItem).Content.ToString());
+            data_file.fillDataFail(double.Parse(fille_value.Text), int.Parse((1 / tue).ToString()));
         }
     }
 }

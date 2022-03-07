@@ -20,7 +20,7 @@
 
         <TextBlock Text="τ =" Margin="566,424,331,13" FontSize="16" FontWeight="Bold" TextAlignment="Center"/>
 
-        <ComboBox x:Name="ComboBoxTueDelay" Margin="618,425,293,13"  RenderTransformOrigin="0.545,2.636">
+        <ComboBox x:Name="ComboBoxTueDelay" Margin="618,424,302,13"  RenderTransformOrigin="0.545,2.636">
             <ComboBoxItem IsSelected="True">0,1</ComboBoxItem>
             <ComboBoxItem>0,01</ComboBoxItem>
             <ComboBoxItem>0,001</ComboBoxItem>
@@ -28,7 +28,10 @@
         <TextBlock HorizontalAlignment="Left" Margin="544,398,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="29" Width="74" RenderTransformOrigin="1.567,-0.224" FontSize="16" FontWeight="Bold" TextAlignment="Center" Text="r&gt;0 , r = "/>
         <TextBox HorizontalAlignment="Left" Height="21" Margin="618,398,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="44" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="670,369,0,0" TextWrapping="Wrap" Text="x'  = r (1 - x(t - 1))*x" VerticalAlignment="Top" Height="24" Width="174" FontSize="16" FontWeight="Bold"/>
-        <Button Content="Нарисовать" HorizontalAlignment="Left" Height="33" Margin="855,386,0,0" VerticalAlignment="Top" Width="99" Click="Button_Drow_Click"/>
-        <Button Content="Очистить" HorizontalAlignment="Left" Height="30" Margin="855,427,0,0" VerticalAlignment="Top" Width="99" Click="Button_Delete_Click"/>
+        <Button Content="Нарисовать" HorizontalAlignment="Left" Height="33" Margin="855,376,0,0" VerticalAlignment="Top" Width="99" Click="Button_Drow_Click"/>
+        <Button Content="Очистить" HorizontalAlignment="Left" Height="30" Margin="855,417,0,0" VerticalAlignment="Top" Width="99" Click="Button_Delete_Click"/>
+        <Button Content="Выборочное изменение" HorizontalAlignment="Left" Height="21" Margin="691,426,0,0" VerticalAlignment="Top" Width="138" Click="Selective_Data_Modification" RenderTransformOrigin="0.487,0.474"/>
+        <Button Content="Заполнить" HorizontalAlignment="Left" Height="21" Margin="747,401,0,0" VerticalAlignment="Top" Width="82" Click="Fill_With_The_Same_Values" RenderTransformOrigin="0.497,0.46"/>
+        <TextBox x:Name="fille_value" HorizontalAlignment="Left" Height="19" Margin="691,401,0,0" TextWrapping="Wrap" Text="5,1" VerticalAlignment="Top" Width="42" TextAlignment="Center" RenderTransformOrigin="0.532,0.456"/>
     </Grid>
 </Window>
