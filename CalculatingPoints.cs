@@ -14,16 +14,19 @@ namespace WpfApp4
         public double step;
         public int ChechMethod;
         public int CountStep;
+        public double r;
 
         public MyViewModel viewModel { get; set; }
+        public List<double> array_data { get; set; }
 
-        public CalculatingPoints(Point _start_point, double _alpha, double _step, int _ChechMethod, int _CountStep)
+        public CalculatingPoints(Point _start_point, double _alpha, double _step, int _ChechMethod, int _CountStep, double _r = 2)
         {
             alpha = _alpha;
             start_point = _start_point;
             step = _step;
             ChechMethod = _ChechMethod;
             CountStep = _CountStep;
+            r = _r;
         }
 
         //Вычисление точек для линии
@@ -41,6 +44,10 @@ namespace WpfApp4
             MethodEulera method_eulera = new MethodEulera(alpha,step);
             RungeKutta2 runge_kutta2 = new RungeKutta2(alpha, step);
             RungeKutta4 runge_kutta4 = new RungeKutta4(alpha, step);
+            WithADelayMethod with_delay = new WithADelayMethod(array_data, r, step);
+
+            //Номер итерации для метода с запазданием 
+            int k = 1;
 
             if (ChechMethod == 1)
             {
@@ -52,13 +59,18 @@ namespace WpfApp4
                 new_point.X = runge_kutte[0];
                 new_point.Y = runge_kutte[1];
             }
+            else if (ChechMethod == 4)
+            {
+                //Уравнение с запазданием
+                new_point = with_delay.WithADelay(start_point, 0);
+            }
             else
             {
                 new_point = runge_kutta2.runge_kutta_2(start_point);
             }
 
             viewModel.Data_Xdt_X.Collection.Add(new_point);
-            for (double t = step; t < CountStep; t = t + step)
+            for (double t = step; t < CountStep; t = t + step, k  = k+1)
             {
                 //test ограничение на размеры
                 if (new_point.X > 5000000 || new_point.Y > 500000) return;
@@ -76,6 +88,12 @@ namespace WpfApp4
                     double[] runge_kutte = runge_kutta4.runge_kutta(new_point);
                     new_point.X = runge_kutte[0];
                     new_point.Y = runge_kutte[1];
+                }
+                else if (ChechMethod == 4)
+                {
+                    //Метод с Запаздыванием
+                    if (k >= CountStep) break; 
+                    new_point = with_delay.WithADelay(new_point, k);
                 }
                 else
                 {

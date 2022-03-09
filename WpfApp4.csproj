@@ -71,6 +71,7 @@
     <Compile Include="WithADelay.xaml.cs">
       <DependentUpon>WithADelay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WithADelayMethod.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

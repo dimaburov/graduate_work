@@ -26,7 +26,7 @@
             <ComboBoxItem>0,001</ComboBoxItem>
         </ComboBox>
         <TextBlock HorizontalAlignment="Left" Margin="544,398,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="29" Width="74" RenderTransformOrigin="1.567,-0.224" FontSize="16" FontWeight="Bold" TextAlignment="Center" Text="r&gt;0 , r = "/>
-        <TextBox HorizontalAlignment="Left" Height="21" Margin="618,398,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="44" TextAlignment="Center"/>
+        <TextBox x:Name="r_value" HorizontalAlignment="Left" Height="21" Margin="618,398,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="44" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="670,369,0,0" TextWrapping="Wrap" Text="x'  = r (1 - x(t - 1))*x" VerticalAlignment="Top" Height="24" Width="174" FontSize="16" FontWeight="Bold"/>
         <Button Content="Нарисовать" HorizontalAlignment="Left" Height="33" Margin="855,376,0,0" VerticalAlignment="Top" Width="99" Click="Button_Drow_Click"/>
         <Button Content="Очистить" HorizontalAlignment="Left" Height="30" Margin="855,417,0,0" VerticalAlignment="Top" Width="99" Click="Button_Delete_Click"/>

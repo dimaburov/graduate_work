@@ -1,4 +1,5 @@
 ﻿using Microsoft.Research.DynamicDataDisplay;
+using Microsoft.Research.DynamicDataDisplay.DataSources;
 using Microsoft.Research.DynamicDataDisplay.PointMarkers;
 using System;
 using System.Collections.Generic;
@@ -56,20 +57,42 @@ namespace WpfApp4
             CanvasDrowDelay.AddLineGraph(viewModel.Data_Xdt_X,
                                     new Pen(GetColor(random_color_line), 0),
                                     new CirclePointMarker { Size = 5.0, Fill = GetColor(random_color_line) },
-                                    new PenDescription(""));
+                                    new PenDescription("ewe"));
 
             //Меняем рисование дополнительного графика
-            //Линия Y t
-            CanvasDrowTimeDelay.AddLineGraph(viewModel.Data_X_t,
+            //Сначала образуем точки заданные пользователем для графика, потом присоединяем полученные точки
+            FileDataReader data_file = new FileDataReader();
+            List<double> array_data = data_file.readerFile();
+
+            CanvasDrowTimeDelay.AddLineGraph(Set_points(array_data),
                                    new Pen(GetColor(random_color_line), 1),
-                                   new PenDescription(""));
+                                   new PenDescription("dsd"));
+            //Линия Xn t
+            CanvasDrowTimeDelay.AddLineGraph(viewModel.Data_Xdt_t,
+                                   new Pen(GetColor(random_color_line), 1),
+                                   new PenDescription("dsd"));
             //Увеличиваем количество линий
             dataLine.CountLine = dataLine.CountLine + 1;
             //Чистим хранилище точек    
             viewModel = new MyViewModel();
 
         }
+        private ObservableDataSource<Point> Set_points(List<double> array_data)
+        {
+            ObservableDataSource<Point> data_point = new ObservableDataSource<Point>();
+            int k = 0;
+            for (int i = -array_data.Count(); i < 0; i++, k++)
+            {
+                data_point.Collection.Add(new Point(i, array_data[k]));
+            }
 
+            for (int i = 0; i < data_point.Collection.Count(); i++)
+            {
+                Console.WriteLine("X: " + data_point.Collection[i].X + "Y: " + data_point.Collection[i].Y);
+            }
+
+            return data_point;
+        }
         //Возвращаем цвет для линии
         private SolidColorBrush GetColor(int color_number)
         {
@@ -100,10 +123,16 @@ namespace WpfApp4
             double tue = double.Parse(((ComboBoxItem)ComboBoxTueDelay.SelectedItem).Content.ToString());
             List<double> array_data = data_file.readerFile();
 
-            /*В метод Calucaltion доабвить r
-             * Доабвить выбор новго метода
-             * Прописать логику для получения новой точки
-            */
+            foreach (var item in array_data)
+            {
+                Console.Write(" "+item.ToString());
+            }
+
+            CalculatingPoints caclucationMethod = new CalculatingPoints(new Point(array_data[array_data.Count()-1], 0), 0, tue, 4, int.Parse((1/tue).ToString()), r);
+            caclucationMethod.array_data = array_data;
+            caclucationMethod.Data_Source();
+
+            viewModel = caclucationMethod.viewModel;
         }
         private void Button_Delete_Click(object sender, RoutedEventArgs e)
         {

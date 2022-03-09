@@ -52,7 +52,7 @@ namespace WpfApp4
             inputFile(arry_data);
         }
         //Чтение файла
-        private List<double> readerFile()
+        public List<double> readerFile()
         {
             string line;
 
