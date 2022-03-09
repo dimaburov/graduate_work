@@ -102,7 +102,7 @@ namespace WpfApp4
                     for (int i = start_array; i < start_array + size; i++)
                     {
                         line += array_data[i].ToString();
-                        line += " ";
+                        if (i +1 != start_array + size) line += " ";
                     }
 
                     Console.WriteLine(line);

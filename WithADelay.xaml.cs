@@ -57,7 +57,7 @@ namespace WpfApp4
             CanvasDrowDelay.AddLineGraph(viewModel.Data_Xdt_X,
                                     new Pen(GetColor(random_color_line), 0),
                                     new CirclePointMarker { Size = 5.0, Fill = GetColor(random_color_line) },
-                                    new PenDescription("ewe"));
+                                    new PenDescription(" "));
 
             //Меняем рисование дополнительного графика
             //Сначала образуем точки заданные пользователем для графика, потом присоединяем полученные точки
@@ -66,11 +66,11 @@ namespace WpfApp4
 
             CanvasDrowTimeDelay.AddLineGraph(Set_points(array_data),
                                    new Pen(GetColor(random_color_line), 1),
-                                   new PenDescription("dsd"));
+                                   new PenDescription(" "));
             //Линия Xn t
             CanvasDrowTimeDelay.AddLineGraph(viewModel.Data_Xdt_t,
                                    new Pen(GetColor(random_color_line), 1),
-                                   new PenDescription("dsd"));
+                                   new PenDescription(" "));
             //Увеличиваем количество линий
             dataLine.CountLine = dataLine.CountLine + 1;
             //Чистим хранилище точек    
@@ -84,11 +84,6 @@ namespace WpfApp4
             for (int i = -array_data.Count(); i < 0; i++, k++)
             {
                 data_point.Collection.Add(new Point(i, array_data[k]));
-            }
-
-            for (int i = 0; i < data_point.Collection.Count(); i++)
-            {
-                Console.WriteLine("X: " + data_point.Collection[i].X + "Y: " + data_point.Collection[i].Y);
             }
 
             return data_point;
@@ -128,7 +123,7 @@ namespace WpfApp4
                 Console.Write(" "+item.ToString());
             }
 
-            CalculatingPoints caclucationMethod = new CalculatingPoints(new Point(array_data[array_data.Count()-1], 0), 0, tue, 4, int.Parse((1/tue).ToString()), r);
+            CalculatingPoints caclucationMethod = new CalculatingPoints(new Point(array_data[array_data.Count()-2], array_data[array_data.Count() - 1]), 0, tue, 4, int.Parse((1/tue).ToString()), r);
             caclucationMethod.array_data = array_data;
             caclucationMethod.Data_Source();
 
@@ -144,8 +139,7 @@ namespace WpfApp4
 
             }
             //Пришлось разнести очищение графика из-за разного количества линий
-            //Теперь рисуем только 1 график так что убрао множтель
-            for (int i = 0; i < dataLine.CountLine; i++)
+            for (int i = 0; i < dataLine.CountLine*2; i++)
             {
                 CanvasDrowTimeDelay.Children.RemoveAt(12);
             }

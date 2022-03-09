@@ -25,8 +25,7 @@ namespace WpfApp4
         //Тело метода по вычислению новой точки
         public Point WithADelay(Point p,int k)
         {
-            Console.WriteLine("K = " + k);
-            return new Point(SetSigFig((1+tue*r)*p.X*(1-(tue*r)/(1+tue*r*array_data[k])),accuracy), SetSigFig(p.X,accuracy));
+            return new Point(SetSigFig(p.Y, accuracy), SetSigFig((1 + tue * r) * p.Y * (1 - (tue * r) / (1 + tue * r * array_data[k])), accuracy));
         }
     }
 }
