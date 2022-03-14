@@ -7,8 +7,9 @@ using System.IO;
 
 namespace WpfApp4
 {
-    class FileDataReader
+    class FileDataReader : SetSigFigs
     {
+        private int accuracy = 2;
         //Храним путь к файлу
         private String path = "../../DataPhi.txt";
         //Выборочное изменение в файле
@@ -42,10 +43,13 @@ namespace WpfApp4
         public void fillDataFail(double fill_value, int size_array)
         {
             List<double> arry_data = new List<double>();
-
+            double new_value = fill_value;
             for (int i = 0; i < size_array; i++)
             {
-                arry_data.Add(fill_value);
+                //arry_data.Add(fill_value);
+                //new_value = SetSigFig(fill_value * new_value,accuracy);
+                new_value = new_value - 1;
+                arry_data.Add(new_value);
             }
 
             Console.WriteLine(arry_data.Count());

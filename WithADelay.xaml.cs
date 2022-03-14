@@ -68,7 +68,7 @@ namespace WpfApp4
                                    new Pen(GetColor(random_color_line), 1),
                                    new PenDescription(" "));
             //Линия Xn t
-            CanvasDrowTimeDelay.AddLineGraph(viewModel.Data_Xdt_t,
+            CanvasDrowTimeDelay.AddLineGraph(viewModel.Data_X_t,
                                    new Pen(GetColor(random_color_line), 1),
                                    new PenDescription(" "));
             //Увеличиваем количество линий
@@ -81,9 +81,10 @@ namespace WpfApp4
         {
             ObservableDataSource<Point> data_point = new ObservableDataSource<Point>();
             int k = 0;
-            for (int i = -array_data.Count(); i < 0; i++, k++)
+            double tue = double.Parse(((ComboBoxItem)ComboBoxTueDelay.SelectedItem).Content.ToString());
+            for (int i = -(array_data.Count()-1); i <= 0; i++, k++)
             {
-                data_point.Collection.Add(new Point(i, array_data[k]));
+                data_point.Collection.Add(new Point(i*tue, array_data[k]));
             }
 
             return data_point;

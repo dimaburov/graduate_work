@@ -34,11 +34,12 @@ namespace WpfApp4
         {
             viewModel = new MyViewModel();
 
-            viewModel.Data_Xdt_X.Collection.Add(start_point);
+            //viewModel.Data_Xdt_X.Collection.Add(start_point);
             //Коллекция точек для графика axisX = t axisY = X
-            viewModel.Data_Xdt_t.Collection.Add(new Point(0, start_point.X));
+            //viewModel.Data_Xdt_t.Collection.Add(new Point(0, start_point.X));
             //Коллекция точек для графика axisX = t axisY = Y
             viewModel.Data_X_t.Collection.Add(new Point(0, start_point.Y));
+            
 
             Point new_point = start_point;
             MethodEulera method_eulera = new MethodEulera(alpha,step);
@@ -62,6 +63,7 @@ namespace WpfApp4
             else if (ChechMethod == 4)
             {
                 //Уравнение с запазданием
+                Console.WriteLine("start xn = "+ start_point.Y);
                 new_point = with_delay.WithADelay(start_point, 0);
             }
             else
@@ -101,13 +103,13 @@ namespace WpfApp4
                     new_point = runge_kutta2.runge_kutta_2(new_point);
                 }
 
-                Console.WriteLine("X = " + new_point.X + " Y = " + new_point.Y);
+                Console.WriteLine("X = " + new_point.X + " Y = " + new_point.Y +" k = "+k);
                 //Ввод данных для таблиц
                 viewModel.Data_Xdt_X.Collection.Add(new_point);
                 //Коллекция точек для графика axisX = t axisY = X
-                viewModel.Data_Xdt_t.Collection.Add(new Point(t, new_point.X));
+                //viewModel.Data_Xdt_t.Collection.Add(new Point(t, new_point.X));
                 //Коллекция точек для графика axisX = t axisY = Y
-                viewModel.Data_X_t.Collection.Add(new Point(t, new_point.Y));
+                viewModel.Data_X_t.Collection.Add(new Point(k*step, new_point.Y));
             }
          
         }
