@@ -28,16 +28,18 @@ namespace WpfApp4
 
     public partial class WithADelay : Window
     {
-        MyViewModel viewModel;
+        MyViewModel viewModelInput;
+        MyViewModel viewModelResult;
         DataLine dataLine;
 
         public WithADelay()
         {
             InitializeComponent();
 
-            viewModel = new MyViewModel();
+            viewModelResult = new MyViewModel();
+            viewModelInput = new MyViewModel();
             dataLine = new DataLine();
-            DataContext = viewModel;
+            DataContext = viewModelResult;
         }
         
         private void Button_Drow_Click(object sender, RoutedEventArgs e)
@@ -54,7 +56,7 @@ namespace WpfApp4
             LineGraph line_main_graph = new LineGraph();
 
             //              Рисуем линии
-            CanvasDrowDelay.AddLineGraph(viewModel.Data_Xdt_X,
+            CanvasDrowDelay.AddLineGraph(viewModelResult.Data_Xdt_t,
                                     new Pen(GetColor(random_color_line), 0),
                                     new CirclePointMarker { Size = 5.0, Fill = GetColor(random_color_line) },
                                     new PenDescription(" "));
@@ -68,13 +70,13 @@ namespace WpfApp4
                                    new Pen(GetColor(random_color_line), 1),
                                    new PenDescription(" "));
             //Линия Xn t
-            CanvasDrowTimeDelay.AddLineGraph(viewModel.Data_X_t,
+            CanvasDrowTimeDelay.AddLineGraph(viewModelResult.Data_Xdt_Ydt,
                                    new Pen(GetColor(random_color_line), 1),
                                    new PenDescription(" "));
             //Увеличиваем количество линий
             dataLine.CountLine = dataLine.CountLine + 1;
             //Чистим хранилище точек    
-            viewModel = new MyViewModel();
+            viewModelResult = new MyViewModel();
 
         }
         private ObservableDataSource<Point> Set_points(List<double> array_data)
@@ -124,11 +126,31 @@ namespace WpfApp4
                 Console.Write(" "+item.ToString());
             }
 
-            CalculatingPoints caclucationMethod = new CalculatingPoints(new Point(array_data[array_data.Count()-2], array_data[array_data.Count() - 1]), 0, tue, 4, int.Parse((1/tue).ToString()), r);
-            caclucationMethod.array_data = array_data;
-            caclucationMethod.Data_Source();
+            //Тестовый обход в 10 шагов
+            for (int i = 0; i < int.Parse(countStep.Text); i++)
+            {
+                //Проход делается тестовые 10 раз - ограничений на минимальное число и очень большое
+                CalculatingPoints caclucationMethod = new CalculatingPoints(new Point(array_data[array_data.Count() - 2], array_data[array_data.Count() - 1]), 0, tue, 4, int.Parse((1 / tue).ToString()), r);
+                caclucationMethod.array_data = array_data;
+                caclucationMethod.Data_Source();
+                viewModelInput = caclucationMethod.viewModel;
+                //Будем перезаписывать значения из Data_xdt_x  в Data_Xdt_t - вывод на 1 графике
+                //В Data_Xdt_t будет [array(i),Data_xdt_x[i]]
+                for (int j = 0; j < array_data.Count(); j++)
+                {
+                    viewModelResult.Data_Xdt_t.Collection.Add(new Point(array_data[j], viewModelInput.Data_Xdt_X.Collection[j].Y));
 
-            viewModel = caclucationMethod.viewModel;
+                    Console.WriteLine("array_data[j] = " + array_data[j] + "viewModelInput.Data_Xdt_X.Collection[j].Y = "+ viewModelInput.Data_Xdt_X.Collection[j].Y);
+                    //Записываем новые значения array_data
+                    array_data[j] = viewModelInput.Data_Xdt_X.Collection[j].Y;
+                }
+                //Перезаписываем Data_X_t в Data_Xdt_Ydt  - вывод на 2 графияке - менять на правильное время относительно шага
+                for (int j = 0; j < viewModelInput.Data_X_t.Collection.Count(); j++)
+                {
+                    viewModelResult.Data_Xdt_Ydt.Collection.Add(new Point(viewModelInput.Data_X_t.Collection[j].X+i, viewModelInput.Data_X_t.Collection[j].Y));
+                }
+            }
+
         }
         private void Button_Delete_Click(object sender, RoutedEventArgs e)
         {
@@ -161,9 +183,32 @@ namespace WpfApp4
         //Заполняем файл одинаковыми значениями
         private void Fill_With_The_Same_Values(object sender, RoutedEventArgs e)
         {
+            string function = ((ComboBoxItem)ComboBoxFunction.SelectedItem).Content.ToString();
+            const string function0 = "xn+1= xn";
+            const string function1 = "xn+1= xn + a";
+            const string function2 = "xn+1= xn * a";
+            const string function3 = "xn+1= rand(-a,a)";
+            int function_param = 0;
+            switch (function)
+            {
+                case function0:
+                    function_param = 0;
+                    break;
+                case function1:
+                    function_param = 1;
+                    break;
+                case function2:
+                    function_param = 2;
+                    break;
+                case function3:
+                    function_param = 3;
+                    break;
+            }
+
+
             FileDataReader data_file = new FileDataReader();
             double tue = double.Parse(((ComboBoxItem)ComboBoxTueDelay.SelectedItem).Content.ToString());
-            data_file.fillDataFail(double.Parse(fille_value.Text), int.Parse((1 / tue).ToString()));
+            data_file.fillDataFail(double.Parse(fille_value.Text), int.Parse((1 / tue).ToString()), function_param);
         }
     }
 }

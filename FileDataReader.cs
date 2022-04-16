@@ -40,16 +40,41 @@ namespace WpfApp4
             return error_message;
         }
         //Заполнение файла одинаковыми значениями
-        public void fillDataFail(double fill_value, int size_array)
+        public void fillDataFail(double fill_value, int size_array, int function_param)
         {
             List<double> arry_data = new List<double>();
             double new_value = fill_value;
+            Random rnd = new Random();
             for (int i = 0; i < size_array; i++)
             {
-                //arry_data.Add(fill_value);
-                //new_value = SetSigFig(fill_value * new_value,accuracy);
-                new_value = new_value - 1;
-                arry_data.Add(new_value);
+                switch (function_param)
+                {
+                    case 0:
+                        Console.WriteLine("fill_value " + Math.Round(fill_value, accuracy));
+                        new_value = Math.Round(fill_value, accuracy);
+                        arry_data.Add(new_value);
+                        break;
+                    case 1:
+                        Console.WriteLine("fill_value + a " + Math.Round(new_value + fill_value, accuracy));
+                        new_value = Math.Round(new_value + fill_value, accuracy);
+                        arry_data.Add(new_value);
+                        break;
+                    case 2:
+                        Console.WriteLine("fill_value * a " + Math.Round(new_value * fill_value, accuracy));
+                        new_value = Math.Round(new_value * fill_value, accuracy);
+                        arry_data.Add(new_value);
+                        break;
+                    case 3:
+                        //Console.WriteLine("sqrt(new_value)" + Math.Round(Math.Sqrt(new_value), accuracy));
+                        //new_value = Math.Round(Math.Sqrt(new_value), accuracy);
+                        //arry_data.Add(new_value);
+                        //break;
+                        //Тестовое заполнение случайными значениями
+                        fill_value = Math.Round(fill_value);
+                        new_value = rnd.Next(0, int.Parse(fill_value.ToString()));
+                        arry_data.Add(new_value);
+                        break;
+                }
             }
 
             Console.WriteLine(arry_data.Count());

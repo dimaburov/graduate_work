@@ -13,7 +13,7 @@ namespace WpfApp4
         private double r;
         private double tue;
 
-        private int accuracy = 3;
+        private int accuracy = 5;
 
         public WithADelayMethod(List<double> _array_data, double _r, double _tue)
         {
@@ -25,9 +25,11 @@ namespace WpfApp4
         //Тело метода по вычислению новой точки
         public Point WithADelay(Point p,int k)
         {
-            Console.WriteLine("k = " + k + " value data["+ array_data[k]+"]");
+            Console.WriteLine("k = " + k + " value data["+ array_data[k]+"] xn = "+ SetSigFig(p.Y, accuracy));
+            Console.WriteLine("P.Y NEW до умножения" + SetSigFig((1 + tue * r * (1 - array_data[k])), accuracy));
             //return new Point(SetSigFig(p.Y, accuracy), SetSigFig((1 + tue * r) * p.Y * (1 - (tue * r) / (1 + tue * r) * array_data[k]), accuracy));
-            return new Point(SetSigFig(p.Y, accuracy), SetSigFig(p.Y * (1 + tue*r*(1 - array_data[k])), accuracy));
+            return new Point(SetSigFig(p.Y, accuracy), SetSigFig(p.Y * (1 + tue * r * (1 - array_data[k])), accuracy));
+            //return new Point(Math.Round(p.Y, accuracy), Math.Round(p.Y * (1 + tue * r * (1 - array_data[k])), accuracy));
         }
     }
 }
