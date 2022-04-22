@@ -6,8 +6,8 @@
         xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
         xmlns:local="clr-namespace:WpfApp4"
         mc:Ignorable="d"
-        Title="Уравнение с запазданием" Height="490.5" Width="1035.542">
-    <Grid HorizontalAlignment="Left" Width="1026" Margin="0,0,0,1">
+        Title="Уравнение с запаздыванием" Height="490.5" Width="1092.542">
+    <Grid HorizontalAlignment="Left" Width="1088" Margin="0,0,0,1">
         <d3:ChartPlotter x:Name="CanvasDrowDelay" Margin="0,10" HorizontalAlignment="Left" Width="512">
             <d3:HorizontalAxisTitle Content="x(t-1)"/>
             <d3:VerticalAxisTitle Content="x(t)"/>
@@ -18,22 +18,22 @@
             <d3:VerticalAxisTitle Content="x"/>
         </d3:ChartPlotter>
 
-        <TextBlock Text="τ =" Margin="542,418,355,19" FontSize="16" FontWeight="Bold" TextAlignment="Center"/>
+        <TextBlock Text="τ =" Margin="544,423,505,14" FontSize="16" FontWeight="Bold" TextAlignment="Center" RenderTransformOrigin="0.98,0.696"/>
 
-        <ComboBox x:Name="ComboBoxTueDelay" Margin="594,418,388,10"  RenderTransformOrigin="0.545,2.636">
+        <ComboBox x:Name="ComboBoxTueDelay" Margin="583,422,450,6"  RenderTransformOrigin="0.545,2.636">
             <ComboBoxItem IsSelected="True">0,1</ComboBoxItem>
             <ComboBoxItem>0,01</ComboBoxItem>
             <ComboBoxItem>0,001</ComboBoxItem>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Left" Margin="520,392,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="29" Width="74" RenderTransformOrigin="1.567,-0.224" FontSize="16" FontWeight="Bold" TextAlignment="Center" Text="r&gt;0 , r = "/>
-        <TextBox x:Name="r_value" HorizontalAlignment="Left" Height="21" Margin="594,392,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="44" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="509,392,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="29" Width="74" RenderTransformOrigin="1.567,-0.224" FontSize="16" FontWeight="Bold" TextAlignment="Center" Text="r&gt;0 , r = "/>
+        <TextBox x:Name="r_value" HorizontalAlignment="Left" Height="21" Margin="583,392,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="55" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="646,363,0,0" TextWrapping="Wrap" Text="x'  = r (1 - x(t - 1))*x" VerticalAlignment="Top" Height="24" Width="174" FontSize="16" FontWeight="Bold"/>
-        <Button Content="Нарисовать" HorizontalAlignment="Left" Height="33" Margin="917,373,0,0" VerticalAlignment="Top" Width="99" Click="Button_Drow_Click"/>
-        <Button Content="Очистить" HorizontalAlignment="Left" Height="30" Margin="917,414,0,0" VerticalAlignment="Top" Width="99" Click="Button_Delete_Click"/>
+        <Button Content="Нарисовать" HorizontalAlignment="Left" Height="33" Margin="1000,374,0,0" VerticalAlignment="Top" Width="78" Click="Button_Drow_Click"/>
+        <Button Content="Очистить" HorizontalAlignment="Left" Height="30" Margin="1000,415,0,0" VerticalAlignment="Top" Width="78" Click="Button_Delete_Click"/>
         <Button Content="Выборочное изменение" HorizontalAlignment="Left" Height="21" Margin="755,423,0,0" VerticalAlignment="Top" Width="138" Click="Selective_Data_Modification" RenderTransformOrigin="0.487,0.474"/>
         <Button Content="Заполнить" HorizontalAlignment="Left" Height="23" Margin="755,390,0,0" VerticalAlignment="Top" Width="138" Click="Fill_With_The_Same_Values" RenderTransformOrigin="0.427,0.333"/>
         <TextBox x:Name="fille_value" HorizontalAlignment="Left" Height="22" Margin="693,392,0,0" TextWrapping="Wrap" Text="5,1" VerticalAlignment="Top" Width="42" TextAlignment="Center" RenderTransformOrigin="0.952,0.526"/>
-        <ComboBox x:Name="ComboBoxFunction" HorizontalAlignment="Left" Margin="646,494,0,-59" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.753,0.545" Height="25">
+        <ComboBox x:Name="ComboBoxFunction" HorizontalAlignment="Left" Margin="778,488,0,-53" VerticalAlignment="Top" Width="104" RenderTransformOrigin="0.753,0.545" Height="25">
             <ComboBoxItem IsSelected="True">xn+1= a</ComboBoxItem>
             <ComboBoxItem>xn+1= xn + a</ComboBoxItem>
             <ComboBoxItem>xn+1= xn * a</ComboBoxItem>
@@ -42,5 +42,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="663,392,0,0" TextWrapping="Wrap" Text="a = " VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
         <TextBox x:Name="countStep" HorizontalAlignment="Left" Height="23" Margin="693,421,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="42" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="646,423,0,0" TextWrapping="Wrap" Text="Кол-во" VerticalAlignment="Top" Height="18" Width="47" FontWeight="Bold"/>
+        <RadioButton x:Name="usualEquation" IsChecked="True" GroupName ="Equation" Content="usual equation" HorizontalAlignment="Left" Margin="898,396,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="usualExponen" GroupName ="Equation" Content="equation exp" HorizontalAlignment="Left" Margin="898,426,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

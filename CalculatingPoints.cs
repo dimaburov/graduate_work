@@ -18,6 +18,7 @@ namespace WpfApp4
 
         public MyViewModel viewModel { get; set; }
         public List<double> array_data { get; set; }
+        public int check_equals { get; set; }
 
         public CalculatingPoints(Point _start_point, double _alpha, double _step, int _ChechMethod, int _CountStep, double _r = 2)
         {
@@ -45,7 +46,7 @@ namespace WpfApp4
             MethodEulera method_eulera = new MethodEulera(alpha,step);
             RungeKutta2 runge_kutta2 = new RungeKutta2(alpha, step);
             RungeKutta4 runge_kutta4 = new RungeKutta4(alpha, step);
-            WithADelayMethod with_delay = new WithADelayMethod(array_data, r, step);
+            WithADelayMethod with_delay = new WithADelayMethod(array_data, r, step, check_equals);
 
             //Номер итерации для метода с запазданием 
             int k = 1;
@@ -63,7 +64,6 @@ namespace WpfApp4
             else if (ChechMethod == 4)
             {
                 //Уравнение с запазданием
-                Console.WriteLine("start xn = "+ start_point.Y);
                 new_point = with_delay.WithADelay(start_point, 0);
             }
             else

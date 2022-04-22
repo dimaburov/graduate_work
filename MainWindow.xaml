@@ -10,7 +10,7 @@
     <Grid HorizontalAlignment="Left" Width="320" Margin="0,0,0,2">
         <TextBlock HorizontalAlignment="Left" Margin="30,5,0,0" TextWrapping="Wrap" Text="Решение дифференциальных уравнений" VerticalAlignment="Top" Width="280" FontSize="16" FontWeight="Bold" TextAlignment="Center"/>
         <CheckBox x:Name="VanDerPolEq" Content="Уравнение Ван дер Поля" HorizontalAlignment="Left" Margin="21,62,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <CheckBox x:Name="WithADelayEq" Content="Уравнение с запазданием" HorizontalAlignment="Left" Margin="21,82,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <CheckBox x:Name="WithADelayEq" Content="Уравнение с запаздыванием" HorizontalAlignment="Left" Margin="21,82,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Button Content="Перейти" HorizontalAlignment="Left" Margin="221,128,0,0" VerticalAlignment="Top" Width="75" Background="#FFC5C5C5" Click="Button_Click"/>
     </Grid>
 </Window>

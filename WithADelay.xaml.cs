@@ -59,7 +59,7 @@ namespace WpfApp4
             CanvasDrowDelay.AddLineGraph(viewModelResult.Data_Xdt_t,
                                     new Pen(GetColor(random_color_line), 0),
                                     new CirclePointMarker { Size = 5.0, Fill = GetColor(random_color_line) },
-                                    new PenDescription(" "));
+                                    new PenDescription("r = " + double.Parse(r_value.Text) + " a = " +  double.Parse(fille_value.Text)));
 
             //Меняем рисование дополнительного графика
             //Сначала образуем точки заданные пользователем для графика, потом присоединяем полученные точки
@@ -72,7 +72,7 @@ namespace WpfApp4
             //Линия Xn t
             CanvasDrowTimeDelay.AddLineGraph(viewModelResult.Data_Xdt_Ydt,
                                    new Pen(GetColor(random_color_line), 1),
-                                   new PenDescription(" "));
+                                   new PenDescription("r = " + double.Parse(r_value.Text) + " a = "+double.Parse(fille_value.Text)));
             //Увеличиваем количество линий
             dataLine.CountLine = dataLine.CountLine + 1;
             //Чистим хранилище точек    
@@ -126,17 +126,23 @@ namespace WpfApp4
                 Console.Write(" "+item.ToString());
             }
 
+            //Определяем выбранное уравнение
+            int check_equals = 0;
+            if (usualEquation.IsChecked == true) check_equals = 1;
+            else check_equals = 2;
+
             //Тестовый обход в 10 шагов
             for (int i = 0; i < int.Parse(countStep.Text); i++)
             {
                 //Проход делается тестовые 10 раз - ограничений на минимальное число и очень большое
                 CalculatingPoints caclucationMethod = new CalculatingPoints(new Point(array_data[array_data.Count() - 2], array_data[array_data.Count() - 1]), 0, tue, 4, int.Parse((1 / tue).ToString()), r);
                 caclucationMethod.array_data = array_data;
+                caclucationMethod.check_equals = check_equals;
                 caclucationMethod.Data_Source();
                 viewModelInput = caclucationMethod.viewModel;
                 //Будем перезаписывать значения из Data_xdt_x  в Data_Xdt_t - вывод на 1 графике
                 //В Data_Xdt_t будет [array(i),Data_xdt_x[i]]
-                for (int j = 0; j < array_data.Count(); j++)
+                for (int j = 0; j < viewModelInput.Data_Xdt_X.Collection.Count(); j++)
                 {
                     viewModelResult.Data_Xdt_t.Collection.Add(new Point(array_data[j], viewModelInput.Data_Xdt_X.Collection[j].Y));
 
@@ -210,5 +216,6 @@ namespace WpfApp4
             double tue = double.Parse(((ComboBoxItem)ComboBoxTueDelay.SelectedItem).Content.ToString());
             data_file.fillDataFail(double.Parse(fille_value.Text), int.Parse((1 / tue).ToString()), function_param);
         }
+
     }
 }
