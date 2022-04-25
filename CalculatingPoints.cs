@@ -15,12 +15,14 @@ namespace WpfApp4
         public int ChechMethod;
         public int CountStep;
         public double r;
+        public double a;
+        public double b;
 
         public MyViewModel viewModel { get; set; }
         public List<double> array_data { get; set; }
         public int check_equals { get; set; }
 
-        public CalculatingPoints(Point _start_point, double _alpha, double _step, int _ChechMethod, int _CountStep, double _r = 2)
+        public CalculatingPoints(Point _start_point, double _alpha, double _step, int _ChechMethod, int _CountStep, double _r = 2, double _a = 1, double _b = 1)
         {
             alpha = _alpha;
             start_point = _start_point;
@@ -28,6 +30,8 @@ namespace WpfApp4
             ChechMethod = _ChechMethod;
             CountStep = _CountStep;
             r = _r;
+            a = _a;
+            b = _b;
         }
 
         //Вычисление точек для линии
@@ -47,6 +51,8 @@ namespace WpfApp4
             RungeKutta2 runge_kutta2 = new RungeKutta2(alpha, step);
             RungeKutta4 runge_kutta4 = new RungeKutta4(alpha, step);
             WithADelayMethod with_delay = new WithADelayMethod(array_data, r, step, check_equals);
+            WithADelayOne with_delay_one = new WithADelayOne(array_data, r, step, a);
+            WithADelayTwo with_delay_two = new WithADelayTwo(array_data, r, step, a, b);
 
             //Номер итерации для метода с запазданием 
             int k = 1;
@@ -65,6 +71,16 @@ namespace WpfApp4
             {
                 //Уравнение с запазданием
                 new_point = with_delay.WithADelay(start_point, 0);
+            }
+            else if (ChechMethod == 5)
+            {
+                //Первое уравнение с запаздыванием
+                new_point = with_delay_one.WithADelay(start_point, 0);
+            }
+            else if (ChechMethod == 6)
+            {
+                //Второе уравнение с запаздыванием
+                new_point = with_delay_two.WithADelay(start_point, 0);
             }
             else
             {
@@ -96,6 +112,18 @@ namespace WpfApp4
                     //Метод с Запаздыванием
                     if (k >= CountStep) break; 
                     new_point = with_delay.WithADelay(new_point, k);
+                }
+                else if (ChechMethod == 5)
+                {
+                    //Первое уравнение с запаздыванием
+                    if (k >= CountStep) break;
+                    new_point = with_delay_one.WithADelay(new_point, k);
+                }
+                else if (ChechMethod == 6)
+                {
+                    //Второе уравнение с запаздыванием
+                    if (k >= CountStep) break;
+                    new_point = with_delay_two.WithADelay(new_point, k);
                 }
                 else
                 {

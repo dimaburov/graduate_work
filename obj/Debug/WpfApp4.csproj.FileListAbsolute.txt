@@ -19,3 +19,7 @@ C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\VanDerPol.g.cs
 C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\VanDerPol.baml
 C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\WithADelay.g.cs
 C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\WithADelay.baml
+C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\WithADelayOneEq.g.cs
+C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\WithADelayOneEq.baml
+C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\WithADelayTwoEq.g.cs
+C:\Users\MiNotebook\source\repos\WpfApp4\WpfApp4\obj\Debug\WithADelayTwoEq.baml

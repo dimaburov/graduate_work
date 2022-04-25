@@ -1,0 +1,49 @@
+﻿<Window x:Class="WpfApp4.WithADelayTwoEq"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
+        xmlns:local="clr-namespace:WpfApp4"
+        mc:Ignorable="d"
+        Title="WithADelayTwoEq" Height="513.054" Width="1122.737">
+    <Grid HorizontalAlignment="Left" Width="1110" Margin="0,0,0,-10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <d3:ChartPlotter x:Name="CanvasDrowDelay" Margin="0,10" HorizontalAlignment="Left" Width="512">
+            <d3:HorizontalAxisTitle Content="x(t-1)"/>
+            <d3:VerticalAxisTitle Content="x(t)"/>
+        </d3:ChartPlotter>
+
+        <d3:ChartPlotter  x:Name="CanvasDrowTimeDelay" Margin="517,10,10,0" Height="359" VerticalAlignment="Top">
+            <d3:HorizontalAxisTitle Content="t"/>
+            <d3:VerticalAxisTitle Content="x"/>
+        </d3:ChartPlotter>
+
+        <TextBlock Text="τ =" Margin="543,439,527,19" FontSize="16" FontWeight="Bold" TextAlignment="Center" RenderTransformOrigin="0.98,0.696"/>
+
+        <ComboBox x:Name="ComboBoxTueDelay" Margin="583,438,472,19"  RenderTransformOrigin="0.545,2.636">
+            <ComboBoxItem IsSelected="True">0,1</ComboBoxItem>
+            <ComboBoxItem>0,01</ComboBoxItem>
+            <ComboBoxItem>0,001</ComboBoxItem>
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Margin="509,408,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="29" Width="74" RenderTransformOrigin="1.567,-0.224" FontSize="16" FontWeight="Bold" TextAlignment="Center" Text="r&gt;0 , r = "/>
+        <TextBox x:Name="r_value" HorizontalAlignment="Left" Height="21" Margin="583,408,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="55" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="519,363,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="24" Width="174" FontSize="16" FontWeight="Bold" RenderTransformOrigin="0.302,0.443"><Run Text="x'  = r "/><Run Text="* "/><Run Text="f("/><Run Text="x(t - 1))*x"/></TextBlock>
+        <Button Content="Нарисовать" HorizontalAlignment="Left" Height="33" Margin="1000,396,0,0" VerticalAlignment="Top" Width="78" Click="Button_Drow_Click"/>
+        <Button Content="Очистить" HorizontalAlignment="Left" Height="30" Margin="1000,440,0,0" VerticalAlignment="Top" Width="78" Click="Button_Delete_Click"/>
+        <Button Content="Выборочное изменение" HorizontalAlignment="Left" Height="21" Margin="828,439,0,0" VerticalAlignment="Top" Width="138" Click="Selective_Data_Modification" RenderTransformOrigin="0.487,0.474"/>
+        <Button Content="Заполнить" HorizontalAlignment="Left" Height="23" Margin="828,405,0,0" VerticalAlignment="Top" Width="138" Click="Fill_With_The_Same_Values" RenderTransformOrigin="0.427,0.333"/>
+        <TextBox x:Name="fille_value" HorizontalAlignment="Left" Height="22" Margin="693,407,0,0" TextWrapping="Wrap" Text="5,1" VerticalAlignment="Top" Width="42" TextAlignment="Center" RenderTransformOrigin="0.952,0.526"/>
+        <TextBlock HorizontalAlignment="Left" Margin="652,407,0,0" TextWrapping="Wrap" Text="fill = " VerticalAlignment="Top" FontWeight="Bold" FontSize="14" Width="34"/>
+        <TextBox x:Name="countStep" HorizontalAlignment="Left" Height="23" Margin="693,439,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="42" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="646,441,0,0" TextWrapping="Wrap" Text="Кол-во" VerticalAlignment="Top" Height="18" Width="47" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="681,363,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" Height="21" FontWeight="Bold" FontSize="16"><Run Text="f(x) = (x+1)/(-a^-1 * x+1)"/><LineBreak/><Run Text="+1)"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="750,409,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.166,0.126" Height="17" FontWeight="Bold"><Run Text="a = "/><LineBreak/><Run/></TextBlock>
+        <TextBox x:Name="a_value" HorizontalAlignment="Left" Height="23" Margin="778,406,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="45" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="894,363,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" Height="21" FontWeight="Bold" FontSize="16"><Run Text="g(x) = (x+1)/(-b^-1 * x+1)"/><LineBreak/><Run Text="+1)"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="750,441,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.166,0.126" Height="17" FontWeight="Bold"><Run Text="b = "/><LineBreak/><Run/></TextBlock>
+        <TextBox x:Name="b_value" HorizontalAlignment="Left" Height="23" Margin="778,438,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="45" TextAlignment="Center"/>
+    </Grid>
+</Window>

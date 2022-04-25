@@ -44,6 +44,16 @@ namespace WpfApp4
                 WithADelay withDelay = new WithADelay();
                 withDelay.Show();
             }
+            if (WithADelayOne.IsChecked == true)
+            {
+                WithADelayOneEq withDelayOne = new WithADelayOneEq();
+                withDelayOne.Show();
+            }
+            if (WithADelayTwo.IsChecked == true)
+            {
+                WithADelayTwoEq withDelayTwo = new WithADelayTwoEq();
+                withDelayTwo.Show();
+            }
         }
    
     }
