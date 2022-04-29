@@ -115,13 +115,14 @@ namespace WpfApp4
             double tue = double.Parse(((ComboBoxItem)ComboBoxTueDelay.SelectedItem).Content.ToString());
             double a = double.Parse(a_value.Text);
             double b = double.Parse(b_value.Text);
+            double h = double.Parse(h_value.Text);
             List<double> array_data = data_file.readerFile();
 
             //Тестовый обход в 10 шагов
             for (int i = 0; i < int.Parse(countStep.Text); i++)
             {
                 //Проход делается тестовые 10 раз - ограничений на минимальное число и очень большое
-                CalculatingPoints caclucationMethod = new CalculatingPoints(new Point(array_data[array_data.Count() - 2], array_data[array_data.Count() - 1]), 0, tue, 6, int.Parse((1 / tue).ToString()), r, a, b);
+                CalculatingPoints caclucationMethod = new CalculatingPoints(new Point(array_data[array_data.Count() - 2], array_data[array_data.Count() - 1]), 0, tue, 6, int.Parse((1 / tue).ToString()), r, a, b, h);
                 caclucationMethod.array_data = array_data;
                 caclucationMethod.Data_Source();
                 viewModelInput = caclucationMethod.viewModel;

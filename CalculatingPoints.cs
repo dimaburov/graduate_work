@@ -17,12 +17,13 @@ namespace WpfApp4
         public double r;
         public double a;
         public double b;
+        public double h;
 
         public MyViewModel viewModel { get; set; }
         public List<double> array_data { get; set; }
         public int check_equals { get; set; }
 
-        public CalculatingPoints(Point _start_point, double _alpha, double _step, int _ChechMethod, int _CountStep, double _r = 2, double _a = 1, double _b = 1)
+        public CalculatingPoints(Point _start_point, double _alpha, double _step, int _ChechMethod, int _CountStep, double _r = 2, double _a = 1, double _b = 1, double _h=0)
         {
             alpha = _alpha;
             start_point = _start_point;
@@ -32,6 +33,7 @@ namespace WpfApp4
             r = _r;
             a = _a;
             b = _b;
+            h = _h;
         }
 
         //Вычисление точек для линии
@@ -52,7 +54,7 @@ namespace WpfApp4
             RungeKutta4 runge_kutta4 = new RungeKutta4(alpha, step);
             WithADelayMethod with_delay = new WithADelayMethod(array_data, r, step, check_equals);
             WithADelayOne with_delay_one = new WithADelayOne(array_data, r, step, a);
-            WithADelayTwo with_delay_two = new WithADelayTwo(array_data, r, step, a, b);
+            WithADelayTwo with_delay_two = new WithADelayTwo(array_data, r, step, a, b,h);
 
             //Номер итерации для метода с запазданием 
             int k = 1;
@@ -80,7 +82,7 @@ namespace WpfApp4
             else if (ChechMethod == 6)
             {
                 //Второе уравнение с запаздыванием
-                new_point = with_delay_two.WithADelay(start_point, 0);
+                new_point = with_delay_two.WithADelay(start_point, 0, viewModel);
             }
             else
             {
@@ -123,7 +125,7 @@ namespace WpfApp4
                 {
                     //Второе уравнение с запаздыванием
                     if (k >= CountStep) break;
-                    new_point = with_delay_two.WithADelay(new_point, k);
+                    new_point = with_delay_two.WithADelay(new_point, k, viewModel);
                 }
                 else
                 {

@@ -14,7 +14,7 @@ namespace WpfApp4
         private double tue;
         private double a;
 
-        private int accuracy = 5;
+        private int accuracy = 15;
 
         public WithADelayOne(List<double> _array_data, double _r, double _tue, double _a)
         {
@@ -29,16 +29,14 @@ namespace WpfApp4
         {
             Point result = new Point(1, 1);
             //result = new Point(SetSigFig(p.Y, accuracy), SetSigFig(p.Y * Math.Exp(r * tue * f(array_data[k])), accuracy));
-            Console.WriteLine("result With A delay " + Math.Round(p.Y * Math.Exp(r * tue * f(array_data[k])), accuracy));
             result = new Point(Math.Round(p.Y, accuracy), Math.Round(p.Y * Math.Exp(r * tue * f(array_data[k])), accuracy));
+            Console.WriteLine("result With A delay " + result);
             return result;
         }
         //Функция f(x)
         private double f(double x)
-        {
-            if (Math.Pow(a, -1) == x) return 0;
-            Console.WriteLine("result f " + Math.Round((x + 1) / (-1 * Math.Pow(a, -1) * x + 1), accuracy));
-            return Math.Round((x+1)/(-1 * Math.Pow(a, -1) * x + 1), accuracy);
+        { 
+            return Math.Round((x-1)/(-1 * Math.Pow(a, -1) * x - 1), accuracy);
         }
     }
 }
