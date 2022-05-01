@@ -53,7 +53,7 @@ namespace WpfApp4
             CanvasDrowDelay.AddLineGraph(viewModelResult.Data_Xdt_t,
                                     new Pen(GetColor(random_color_line), 0),
                                     new CirclePointMarker { Size = 5.0, Fill = GetColor(random_color_line) },
-                                    new PenDescription("r = " + double.Parse(r_value.Text) + " fill = " + double.Parse(fille_value.Text)));
+                                    new PenDescription("r = " + double.Parse(r_value.Text) + " fill = " + double.Parse(fille_value.Text)+ " h = " + double.Parse(h_value.Text)));
 
             //Меняем рисование дополнительного графика
             //Сначала образуем точки заданные пользователем для графика, потом присоединяем полученные точки
@@ -66,7 +66,7 @@ namespace WpfApp4
             //Линия Xn t
             CanvasDrowTimeDelay.AddLineGraph(viewModelResult.Data_Xdt_Ydt,
                                    new Pen(GetColor(random_color_line), 1),
-                                   new PenDescription("r = " + double.Parse(r_value.Text) + " fill = " + double.Parse(fille_value.Text)));
+                                   new PenDescription("r = " + double.Parse(r_value.Text) + " fill = " + double.Parse(fille_value.Text) + " h = " + double.Parse(h_value.Text)));
             //Увеличиваем количество линий
             dataLine.CountLine = dataLine.CountLine + 1;
             //Чистим хранилище точек    

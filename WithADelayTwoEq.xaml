@@ -39,10 +39,10 @@
         <TextBlock HorizontalAlignment="Left" Margin="652,417,0,0" TextWrapping="Wrap" Text="fill = " VerticalAlignment="Top" FontWeight="Bold" FontSize="14" Width="34"/>
         <TextBox x:Name="countStep" HorizontalAlignment="Left" Height="23" Margin="693,449,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="42" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="646,451,0,0" TextWrapping="Wrap" Text="Кол-во" VerticalAlignment="Top" Height="18" Width="47" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="843,352,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" Height="21" FontWeight="Bold" FontSize="16"><Run Text="f(x) = (x+1)/(-a^-1 * x+1)"/><LineBreak/><Run Text="+1)"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="843,352,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" Height="21" FontWeight="Bold" FontSize="16"><Run Text="f(x) = (x-1)/(-a^-1 * x-1)"/><LineBreak/><Run Text="+1)"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="750,409,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.166,0.126" Height="17" FontWeight="Bold"><Run Text="a = "/><LineBreak/><Run/></TextBlock>
         <TextBox x:Name="a_value" HorizontalAlignment="Left" Height="23" Margin="778,406,0,0" TextWrapping="Wrap" Text="1,3" VerticalAlignment="Top" Width="45" TextAlignment="Center"/>
-        <TextBlock HorizontalAlignment="Left" Margin="843,382,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" Height="21" FontWeight="Bold" FontSize="16"><Run Text="g(x) = (x+1)/(-b^-1 * x+1)"/><LineBreak/><Run Text="+1)"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="843,382,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" Height="21" FontWeight="Bold" FontSize="16"><Run Text="g(x) = x/(-b^-1 * x-1)"/><LineBreak/><Run Text="+1)"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="750,441,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.166,0.126" Height="17" FontWeight="Bold"><Run Text="b = "/><LineBreak/><Run/></TextBlock>
         <TextBox x:Name="b_value" HorizontalAlignment="Left" Height="23" Margin="778,438,0,0" TextWrapping="Wrap" Text="0,7" VerticalAlignment="Top" Width="45" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="750,469,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23" RenderTransformOrigin="0.433,0.812" FontWeight="Bold"><Run Text="h = "/><LineBreak/><Run/></TextBlock>

@@ -59,7 +59,7 @@ namespace WpfApp4
         //Функция g(x)
         private double g(double x)
         {
-            return Math.Round((x - 1) / (-1 * Math.Pow(b, -1) * x - 1), accuracy);
+            return Math.Round(x / (-1 * Math.Pow(b, -1) * x - 1), accuracy);
         }
     }
 }
