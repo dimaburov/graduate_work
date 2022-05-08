@@ -138,7 +138,7 @@ namespace WpfApp4
                     Console.WriteLine(start_array);
 
 
-                    writer.WriteLineAsync(line);
+                    writer.WriteLine(line);
                     line = "";
                     start_array += size_row;
                 }

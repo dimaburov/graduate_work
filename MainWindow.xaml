@@ -9,10 +9,10 @@
         Title="Выбор уравнения" Height="189" Width="329.833">
     <Grid HorizontalAlignment="Left" Width="320" Margin="0,0,0,2">
         <TextBlock HorizontalAlignment="Left" Margin="30,5,0,0" TextWrapping="Wrap" Text="Фазовые портреты дифференциальных уравнений" VerticalAlignment="Top" Width="280" FontSize="16" FontWeight="Bold" TextAlignment="Center"/>
-        <CheckBox x:Name="VanDerPolEq" Content="x'' + α(1-x^2)x' + x = 0" HorizontalAlignment="Left" Margin="21,62,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <CheckBox x:Name="WithADelayEq" Content="x'  = r (1 - x(t - 1))*x" HorizontalAlignment="Left" Margin="21,82,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Button Content="Перейти" HorizontalAlignment="Left" Margin="221,128,0,0" VerticalAlignment="Top" Width="75" Background="#FFC5C5C5" Click="Button_Click"/>
-        <CheckBox x:Name="WithADelayOne" Content="x' = r*f(x(t-1))*x" HorizontalAlignment="Left" Margin="21,102,0,0" VerticalAlignment="Top" Width="118" FontWeight="Bold"/>
-        <CheckBox x:Name="WithADelayTwo" Content="x' = r*(f(x(t-h) - g(x(t-1)))*x" HorizontalAlignment="Left" Margin="21,122,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <CheckBox x:Name="VanDerPolEq" Content="x'' + α(1-x^2)x' + x = 0" HorizontalAlignment="Left" Margin="17,51,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <CheckBox x:Name="WithADelayEq" Content="x'  = r (1 - x(t - 1))*x" HorizontalAlignment="Left" Margin="17,71,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Button Content="Перейти" HorizontalAlignment="Left" Margin="235,128,0,0" VerticalAlignment="Top" Width="75" Background="#FFC5C5C5" Click="Button_Click"/>
+        <CheckBox x:Name="WithADelayOne" Content="x' = r*f(x(t-1))*x" HorizontalAlignment="Left" Margin="17,91,0,0" VerticalAlignment="Top" Width="118" FontWeight="Bold"/>
+        <CheckBox x:Name="WithADelayTwo" Content="u'  = (f(e^(u(t - 1)*r)) - g(e^(u(t - h)*r)))&#xD;&#xA;" HorizontalAlignment="Left" Margin="17,111,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="17"/>
     </Grid>
 </Window>

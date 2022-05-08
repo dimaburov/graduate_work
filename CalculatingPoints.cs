@@ -22,6 +22,7 @@ namespace WpfApp4
         public MyViewModel viewModel { get; set; }
         public List<double> array_data { get; set; }
         public int check_equals { get; set; }
+        public double sigma_value { get; set; }
 
         public CalculatingPoints(Point _start_point, double _alpha, double _step, int _ChechMethod, int _CountStep, double _r = 2, double _a = 1, double _b = 1, double _h=0)
         {
@@ -54,7 +55,7 @@ namespace WpfApp4
             RungeKutta4 runge_kutta4 = new RungeKutta4(alpha, step);
             WithADelayMethod with_delay = new WithADelayMethod(array_data, r, step, check_equals);
             WithADelayOne with_delay_one = new WithADelayOne(array_data, r, step, a);
-            WithADelayTwo with_delay_two = new WithADelayTwo(array_data, r, step, a, b,h);
+            WithADelayTwo with_delay_two = new WithADelayTwo(array_data, r, step, a, b,h, sigma_value);
 
             //Номер итерации для метода с запазданием 
             int k = 1;

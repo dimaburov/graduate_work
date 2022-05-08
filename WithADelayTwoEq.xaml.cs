@@ -77,6 +77,7 @@ namespace WpfApp4
         {
             ObservableDataSource<Point> data_point = new ObservableDataSource<Point>();
             int k = 0;
+            double sigm = double.Parse(sigma_value.Text);
             double tue = double.Parse(((ComboBoxItem)ComboBoxTueDelay.SelectedItem).Content.ToString());
             for (int i = -(array_data.Count() - 1); i <= 0; i++, k++)
             {
@@ -117,12 +118,14 @@ namespace WpfApp4
             double b = double.Parse(b_value.Text);
             double h = double.Parse(h_value.Text);
             List<double> array_data = data_file.readerFile();
+            double sigm = double.Parse(sigma_value.Text);
 
             //Тестовый обход в 10 шагов
             for (int i = 0; i < int.Parse(countStep.Text); i++)
             {
                 //Проход делается тестовые 10 раз - ограничений на минимальное число и очень большое
-                CalculatingPoints caclucationMethod = new CalculatingPoints(new Point(array_data[array_data.Count() - 2], array_data[array_data.Count() - 1]), 0, tue, 6, int.Parse((1 / tue).ToString()), r, a, b, h);
+                CalculatingPoints caclucationMethod = new CalculatingPoints(new Point(array_data[array_data.Count() - 2], array_data[array_data.Count() - 1]), 0, tue, 6, int.Parse((sigm / tue).ToString()), r, a, b, h);
+                caclucationMethod.sigma_value = sigm;
                 caclucationMethod.array_data = array_data;
                 caclucationMethod.Data_Source();
                 viewModelInput = caclucationMethod.viewModel;
@@ -137,7 +140,7 @@ namespace WpfApp4
                 //Перезаписываем Data_X_t в Data_Xdt_Ydt  - вывод на 2 графияке - менять на правильное время относительно шага
                 for (int j = 0; j < viewModelInput.Data_X_t.Collection.Count(); j++)
                 {
-                    viewModelResult.Data_Xdt_Ydt.Collection.Add(new Point(viewModelInput.Data_X_t.Collection[j].X + i, viewModelInput.Data_X_t.Collection[j].Y));
+                    viewModelResult.Data_Xdt_Ydt.Collection.Add(new Point(viewModelInput.Data_X_t.Collection[j].X + sigm*i, viewModelInput.Data_X_t.Collection[j].Y));
                 }
             }
 
@@ -174,10 +177,18 @@ namespace WpfApp4
         private void Fill_With_The_Same_Values(object sender, RoutedEventArgs e)
         {
             int function_param = 0;
+            double sigm = double.Parse(sigma_value.Text);
             FileDataReader data_file = new FileDataReader();
             double tue = double.Parse(((ComboBoxItem)ComboBoxTueDelay.SelectedItem).Content.ToString());
-            data_file.fillDataFail(double.Parse(fille_value.Text), int.Parse((1 / tue).ToString()), function_param);
+            data_file.fillDataFail(double.Parse(fille_value.Text), int.Parse((sigm / tue).ToString()), function_param);
         }
+
+        //private void Sigma_value_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    //Выводим ограничения по h
+        //    limitations_h.Text = "";
+        //    limitations_h.Text = "0 < h < " + sigma_value.Text;
+        //}
 
     }
 }
