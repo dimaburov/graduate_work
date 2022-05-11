@@ -13,6 +13,6 @@
         <CheckBox x:Name="WithADelayEq" Content="x'  = r (1 - x(t - 1))*x" HorizontalAlignment="Left" Margin="17,71,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Button Content="Перейти" HorizontalAlignment="Left" Margin="235,128,0,0" VerticalAlignment="Top" Width="75" Background="#FFC5C5C5" Click="Button_Click"/>
         <CheckBox x:Name="WithADelayOne" Content="x' = r*f(x(t-1))*x" HorizontalAlignment="Left" Margin="17,91,0,0" VerticalAlignment="Top" Width="118" FontWeight="Bold"/>
-        <CheckBox x:Name="WithADelayTwo" Content="u'  = (f(e^(u(t - 1)*r)) - g(e^(u(t - h)*r)))&#xD;&#xA;" HorizontalAlignment="Left" Margin="17,111,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="17"/>
+        <CheckBox x:Name="WithADelayTwo" Content="u'  = (f(e^(u(t - h)*r)) + g(e^(u(t - 1)*r)))&#xA;" HorizontalAlignment="Left" Margin="17,111,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="17"/>
     </Grid>
 </Window>

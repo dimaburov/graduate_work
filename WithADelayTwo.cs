@@ -36,6 +36,9 @@ namespace WpfApp4
             //result = new Point(SetSigFig(p.Y, accuracy), SetSigFig(p.Y * Math.Exp(r * tue * f(array_data[k])), accuracy));
             int index_x_t = int.Parse((Math.Round(h*(1 / tue),1) - k).ToString());
             double x_t = 0;
+            //test
+            h = 1;
+
             Console.WriteLine("index_x_t " + index_x_t);
             if (index_x_t > 0)
             {
@@ -50,6 +53,8 @@ namespace WpfApp4
 
             Console.WriteLine("result With A delay " + Math.Round(p.Y * Math.Exp(r * tue * (f(x_t) + g(array_data[k]))), accuracy));
             //result = new Point(Math.Round(p.Y, accuracy), Math.Round(p.Y * Math.Exp(r * tue * (f(x_t) + g(array_data[k]))), accuracy));
+            //result = new Point(Math.Round(p.Y, accuracy), Math.Round(p.Y + tue * (f(Math.Exp(array_data[k] * r)) + g(Math.Exp(x_t * r))), accuracy));
+            //result = new Point(Math.Round(p.Y, accuracy), Math.Round(p.Y + tue * (f(Math.Exp(x_t * r)) + g(Math.Exp(array_data[k] * r))), accuracy));
             result = new Point(Math.Round(p.Y, accuracy), Math.Round(p.Y + tue * (f(Math.Exp(array_data[k] * r)) + g(Math.Exp(x_t * r))), accuracy));
             return result;
         }
