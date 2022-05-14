@@ -25,11 +25,11 @@ namespace WpfApp4
         MyViewModel viewModelInput;
         MyViewModel viewModelResult;
         DataLine dataLine;
+        TextBlock txtBox = new TextBlock();
 
         public WithADelayTwoEq()
         {
             InitializeComponent();
-
             viewModelResult = new MyViewModel();
             viewModelInput = new MyViewModel();
             dataLine = new DataLine();
@@ -53,7 +53,7 @@ namespace WpfApp4
             CanvasDrowDelay.AddLineGraph(viewModelResult.Data_Xdt_t,
                                     new Pen(GetColor(random_color_line), 0),
                                     new CirclePointMarker { Size = 5.0, Fill = GetColor(random_color_line) },
-                                    new PenDescription("r = " + double.Parse(r_value.Text) + " fill = " + double.Parse(fille_value.Text)+ " h = " + double.Parse(sigma_value.Text)));
+                                    new PenDescription("r = " + double.Parse(r_value.Text) + " a = " + double.Parse(a_value.Text)+ " h = " + double.Parse(h_value.Text)));
 
             //Меняем рисование дополнительного графика
             //Сначала образуем точки заданные пользователем для графика, потом присоединяем полученные точки
@@ -66,7 +66,7 @@ namespace WpfApp4
             //Линия Xn t
             CanvasDrowTimeDelay.AddLineGraph(viewModelResult.Data_Xdt_Ydt,
                                    new Pen(GetColor(random_color_line), 1),
-                                   new PenDescription("r = " + double.Parse(r_value.Text) + " fill = " + double.Parse(fille_value.Text) + " h = " + double.Parse(sigma_value.Text)));
+                                   new PenDescription("r = " + double.Parse(r_value.Text) + " a = " + double.Parse(a_value.Text) + " h = " + double.Parse(h_value.Text)));
             //Увеличиваем количество линий
             dataLine.CountLine = dataLine.CountLine + 1;
             //Чистим хранилище точек    
@@ -77,7 +77,7 @@ namespace WpfApp4
         {
             ObservableDataSource<Point> data_point = new ObservableDataSource<Point>();
             int k = 0;
-            double sigm = double.Parse(sigma_value.Text);
+            double h = double.Parse(h_value.Text);
             double tue = double.Parse(((ComboBoxItem)ComboBoxTueDelay.SelectedItem).Content.ToString());
             for (int i = -(array_data.Count() - 1); i <= 0; i++, k++)
             {
@@ -118,14 +118,12 @@ namespace WpfApp4
             double b = double.Parse(b_value.Text);
             double h = double.Parse(h_value.Text);
             List<double> array_data = data_file.readerFile();
-            double sigm = double.Parse(sigma_value.Text);
 
             //Тестовый обход в 10 шагов
             for (int i = 0; i < int.Parse(countStep.Text); i++)
             {
                 //Проход делается тестовые 10 раз - ограничений на минимальное число и очень большое
-                CalculatingPoints caclucationMethod = new CalculatingPoints(new Point(array_data[array_data.Count() - 2], array_data[array_data.Count() - 1]), 0, tue, 6, int.Parse((sigm / tue).ToString()), r, a, b, h);
-                caclucationMethod.sigma_value = sigm;
+                CalculatingPoints caclucationMethod = new CalculatingPoints(new Point(array_data[array_data.Count() - 2], array_data[array_data.Count() - 1]), 0, tue, 6, int.Parse((h / tue).ToString()), r, a, b, h);
                 caclucationMethod.array_data = array_data;
                 caclucationMethod.Data_Source();
                 viewModelInput = caclucationMethod.viewModel;
@@ -140,7 +138,7 @@ namespace WpfApp4
                 //Перезаписываем Data_X_t в Data_Xdt_Ydt  - вывод на 2 графияке - менять на правильное время относительно шага
                 for (int j = 0; j < viewModelInput.Data_X_t.Collection.Count(); j++)
                 {
-                    viewModelResult.Data_Xdt_Ydt.Collection.Add(new Point(viewModelInput.Data_X_t.Collection[j].X + sigm*i, viewModelInput.Data_X_t.Collection[j].Y));
+                    viewModelResult.Data_Xdt_Ydt.Collection.Add(new Point(viewModelInput.Data_X_t.Collection[j].X + h*i, viewModelInput.Data_X_t.Collection[j].Y));
                 }
             }
 
@@ -177,11 +175,47 @@ namespace WpfApp4
         private void Fill_With_The_Same_Values(object sender, RoutedEventArgs e)
         {
             int function_param = 0;
-            double sigm = double.Parse(sigma_value.Text);
+            double h = double.Parse(h_value.Text);
             FileDataReader data_file = new FileDataReader();
             double tue = double.Parse(((ComboBoxItem)ComboBoxTueDelay.SelectedItem).Content.ToString());
-            data_file.fillDataFail(double.Parse(fille_value.Text), int.Parse((sigm / tue).ToString()), function_param);
+            data_file.fillDataFail(double.Parse(fille_value.Text), int.Parse((h / tue).ToString()), function_param);
+
+            drow_button.IsEnabled = true;
         }
+
+        private void fill_value_equals_h()
+        {
+            double a = double.Parse(a_value.Text);
+            double r = double.Parse(r_value.Text);
+            double T = 2 + a + 1 / a;
+            double t_0 = 1 + 1 / a;
+            txtBox.Name = "Equals_h";
+            txtBox.Text = Math.Round((r - 1) * T + t_0 + 1,2) + " < h < " + Math.Round(r * T,2);
+            txtBox.Width = 108;
+            txtBox.Height = 18;
+            txtBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            txtBox.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            txtBox.Margin = new Thickness(751,470,0,0);
+            txtBox.FontWeight = FontWeights.Bold;
+            MainGrid.Children.Add(txtBox);
+        }
+        private void Fille_value_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            drow_button.IsEnabled = false;
+        }
+
+        private void H_value_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+            drow_button.IsEnabled = false;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainGrid.Children.Remove(txtBox);
+            fill_value_equals_h();
+        }
+
+
 
 
         //private void Sigma_value_TextChanged(object sender, TextChangedEventArgs e)
