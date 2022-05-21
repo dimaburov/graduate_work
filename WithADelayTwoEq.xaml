@@ -21,15 +21,15 @@
             <d3:VerticalAxisTitle Content="x"/>
         </d3:ChartPlotter>
 
-        <TextBlock Text="τ =" Margin="543,449,526.333,9" FontSize="16" FontWeight="Bold" TextAlignment="Center" RenderTransformOrigin="0.98,0.696"/>
+        <TextBlock Text="τ =" Margin="545,440,524,0" FontSize="16" FontWeight="Bold" TextAlignment="Center" RenderTransformOrigin="0.98,0.696" Height="24" VerticalAlignment="Top"/>
 
-        <ComboBox x:Name="ComboBoxTueDelay" Margin="583,448,472,0"  RenderTransformOrigin="0.545,2.636" Height="25" VerticalAlignment="Top">
+        <ComboBox x:Name="ComboBoxTueDelay" Margin="585,439,470,0"  RenderTransformOrigin="0.545,2.636" Height="25" VerticalAlignment="Top">
             <ComboBoxItem>0,1</ComboBoxItem>
             <ComboBoxItem IsSelected="True">0,01</ComboBoxItem>
             <ComboBoxItem>0,001</ComboBoxItem>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Left" Margin="509,418,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="29" Width="74" RenderTransformOrigin="1.567,-0.224" FontSize="16" FontWeight="Bold" TextAlignment="Center" Text="r&gt;0 , r = "/>
-        <TextBox x:Name="r_value" HorizontalAlignment="Left" Height="21" Margin="583,418,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="55" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="512,408,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="29" Width="74" RenderTransformOrigin="1.567,-0.224" FontSize="16" FontWeight="Bold" TextAlignment="Center" Text="r&gt;0 , r = "/>
+        <TextBox x:Name="r_value" HorizontalAlignment="Left" Height="21" Margin="586,408,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="55" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="517,365,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="24" Width="306" FontSize="16" FontWeight="Bold" RenderTransformOrigin="0.302,0.443"><Run Text="u'  = (f(e^(u(t - "/><Run FontSize="12" Text="h"/><Run Text=")*r)) + g("/><Run Text="e^(u(t - 1)*r)))*x"/></TextBlock>
         <Button x:Name="drow_button" Content="Нарисовать" HorizontalAlignment="Left" Height="33" Margin="1022,409,0,0" VerticalAlignment="Top" Width="78" Click="Button_Drow_Click"/>
         <Button Content="Очистить" HorizontalAlignment="Left" Height="30" Margin="1022,453,0,0" VerticalAlignment="Top" Width="78" Click="Button_Delete_Click"/>
@@ -48,5 +48,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="651,470,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="2.128,0.585" Width="34" FontWeight="Bold" Text=" h  = "/>
         <TextBox x:Name="h_value" HorizontalAlignment="Left" Height="22" Margin="692,469,0,0" TextWrapping="Wrap" Text="6" VerticalAlignment="Top" Width="42" TextAlignment="Center" TextChanged="H_value_TextChanged_1"/>
         <Button Content="Расчет h" HorizontalAlignment="Left" Margin="864,470,0,0" VerticalAlignment="Top" Width="138" Click="Button_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="555,469,0,0" TextWrapping="Wrap" Text="n = " VerticalAlignment="Top" Width="31" FontSize="14" FontWeight="Bold"/>
+        <TextBox x:Name="n_value" HorizontalAlignment="Left" Height="23" Margin="585,469,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="56" TextAlignment="Center"/>
     </Grid>
 </Window>

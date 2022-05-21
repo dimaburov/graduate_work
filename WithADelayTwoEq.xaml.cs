@@ -53,9 +53,9 @@ namespace WpfApp4
             CanvasDrowDelay.AddLineGraph(viewModelResult.Data_Xdt_t,
                                     new Pen(GetColor(random_color_line), 0),
                                     new CirclePointMarker { Size = 5.0, Fill = GetColor(random_color_line) },
-                                    new PenDescription("r = " + double.Parse(r_value.Text) + " a = " + double.Parse(a_value.Text)+ " h = " + double.Parse(h_value.Text)));
+                                    new PenDescription("r = " + double.Parse(r_value.Text) + " a = " + double.Parse(a_value.Text)+ " h = " + double.Parse(h_value.Text) + " b = " + double.Parse(b_value.Text)));
 
-            //Меняем рисование дополнительного графика
+            //Меняем рисование дополнительного график
             //Сначала образуем точки заданные пользователем для графика, потом присоединяем полученные точки
             FileDataReader data_file = new FileDataReader();
             List<double> array_data = data_file.readerFile();
@@ -66,7 +66,7 @@ namespace WpfApp4
             //Линия Xn t
             CanvasDrowTimeDelay.AddLineGraph(viewModelResult.Data_Xdt_Ydt,
                                    new Pen(GetColor(random_color_line), 1),
-                                   new PenDescription("r = " + double.Parse(r_value.Text) + " a = " + double.Parse(a_value.Text) + " h = " + double.Parse(h_value.Text)));
+                                   new PenDescription("r = " + double.Parse(r_value.Text) + " a = " + double.Parse(a_value.Text) + " h = " + double.Parse(h_value.Text) + " b = " + double.Parse(b_value.Text)));
             //Увеличиваем количество линий
             dataLine.CountLine = dataLine.CountLine + 1;
             //Чистим хранилище точек    
@@ -105,7 +105,7 @@ namespace WpfApp4
                     return Brushes.Orange;
             }
 
-            return Brushes.Blue;
+            return Brushes.Black;
         }
 
         private void Data_Source()
@@ -186,11 +186,11 @@ namespace WpfApp4
         private void fill_value_equals_h()
         {
             double a = double.Parse(a_value.Text);
-            double r = double.Parse(r_value.Text);
+            double n = double.Parse(n_value.Text);
             double T = 2 + a + 1 / a;
             double t_0 = 1 + 1 / a;
             txtBox.Name = "Equals_h";
-            txtBox.Text = Math.Round((r - 1) * T + t_0 + 1,2) + " < h < " + Math.Round(r * T,2);
+            txtBox.Text = Math.Round((n - 1) * T + t_0 + 1,2) + " < h < " + Math.Round(n * T,2);
             txtBox.Width = 108;
             txtBox.Height = 18;
             txtBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
