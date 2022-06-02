@@ -66,7 +66,7 @@ namespace WpfApp4
             //Линия Xn t
             CanvasDrowTimeDelay.AddLineGraph(viewModelResult.Data_Xdt_Ydt,
                                    new Pen(GetColor(random_color_line), 1),
-                                   new PenDescription("r = " + double.Parse(r_value.Text) + " a = " + double.Parse(a_value.Text) + " h = " + double.Parse(h_value.Text) + " b = " + double.Parse(b_value.Text)));
+                                   new PenDescription("r = " + double.Parse(r_value.Text) + " a = " + double.Parse(a_value.Text) + " h = " + double.Parse(h_value.Text) + " b = " + double.Parse(b_value.Text) + " fill = " + double.Parse(fille_value.Text)));
             //Увеличиваем количество линий
             dataLine.CountLine = dataLine.CountLine + 1;
             //Чистим хранилище точек    
