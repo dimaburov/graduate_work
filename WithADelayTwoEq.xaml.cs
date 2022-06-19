@@ -66,7 +66,14 @@ namespace WpfApp4
             //Линия Xn t
             CanvasDrowTimeDelay.AddLineGraph(viewModelResult.Data_Xdt_Ydt,
                                    new Pen(GetColor(random_color_line), 1),
-                                   new PenDescription("r = " + double.Parse(r_value.Text) + " a = " + double.Parse(a_value.Text) + " h = " + double.Parse(h_value.Text) + " b = " + double.Parse(b_value.Text) + " fill = " + double.Parse(fille_value.Text)));
+                                   new PenDescription(" x(t) r = " + double.Parse(r_value.Text) + " a = " + double.Parse(a_value.Text) + " h = " + double.Parse(h_value.Text) + " b = " + double.Parse(b_value.Text) + " fill = " + double.Parse(fille_value.Text)));
+
+
+            random_color_line = color_random.Next(0, 5);
+            //Линия Un t
+            CanvasDrowTimeDelay.AddLineGraph(viewModelResult.Data_Udt_t,
+                                   new Pen(GetColor(6), 1),
+                                   new PenDescription(" u(t) r = " + double.Parse(r_value.Text) + " a = " + double.Parse(a_value.Text) + " h = " + double.Parse(h_value.Text) + " b = " + double.Parse(b_value.Text) + " fill = " + double.Parse(fille_value.Text)));
             //Увеличиваем количество линий
             dataLine.CountLine = dataLine.CountLine + 1;
             //Чистим хранилище точек    
@@ -119,11 +126,9 @@ namespace WpfApp4
             double h = double.Parse(h_value.Text);
             List<double> array_data = data_file.readerFile();
 
-            //Тестовый обход в 10 шагов
             for (int i = 0; i < int.Parse(countStep.Text); i++)
             {
-                //Проход делается тестовые 10 раз - ограничений на минимальное число и очень большое
-                CalculatingPoints caclucationMethod = new CalculatingPoints(new Point(array_data[array_data.Count() - 2], array_data[array_data.Count() - 1]), 0, tue, 6, int.Parse((h / tue).ToString()), r, a, b, h);
+                CalculatingPoints caclucationMethod = new CalculatingPoints(new Point(array_data[array_data.Count() - 2], array_data[array_data.Count() - 1]), 0, tue, 6, int.Parse((1 / tue).ToString()), r, a, b, h);
                 caclucationMethod.array_data = array_data;
                 caclucationMethod.Data_Source();
                 viewModelInput = caclucationMethod.viewModel;
@@ -138,7 +143,14 @@ namespace WpfApp4
                 //Перезаписываем Data_X_t в Data_Xdt_Ydt  - вывод на 2 графияке - менять на правильное время относительно шага
                 for (int j = 0; j < viewModelInput.Data_X_t.Collection.Count(); j++)
                 {
-                    viewModelResult.Data_Xdt_Ydt.Collection.Add(new Point(viewModelInput.Data_X_t.Collection[j].X + h*i, viewModelInput.Data_X_t.Collection[j].Y));
+                    viewModelResult.Data_Xdt_Ydt.Collection.Add(new Point(viewModelInput.Data_X_t.Collection[j].X + i, viewModelInput.Data_X_t.Collection[j].Y));
+
+                    //test
+                    int accuracy = 2;
+                    double new_value_r = Math.Round(r * viewModelInput.Data_X_t.Collection[j].Y, accuracy);
+                    double new_exp = Math.Round(Math.Exp(new_value_r), accuracy);
+
+                    viewModelResult.Data_Udt_t.Collection.Add(new Point(viewModelInput.Data_X_t.Collection[j].X + i, new_exp));
                 }
             }
 
@@ -175,10 +187,10 @@ namespace WpfApp4
         private void Fill_With_The_Same_Values(object sender, RoutedEventArgs e)
         {
             int function_param = 0;
-            double h = double.Parse(h_value.Text);
+            //double h = double.Parse(h_value.Text);
             FileDataReader data_file = new FileDataReader();
             double tue = double.Parse(((ComboBoxItem)ComboBoxTueDelay.SelectedItem).Content.ToString());
-            data_file.fillDataFail(double.Parse(fille_value.Text), int.Parse((h / tue).ToString()), function_param);
+            data_file.fillDataFail(double.Parse(fille_value.Text), int.Parse((1 / tue).ToString()), function_param);
 
             drow_button.IsEnabled = true;
         }
@@ -188,9 +200,9 @@ namespace WpfApp4
             double a = double.Parse(a_value.Text);
             double n = double.Parse(n_value.Text);
             double T = 2 + a + 1 / a;
-            double t_0 = 1 + 1 / a;
+            double t_0 = 2 + 1 / a;
             txtBox.Name = "Equals_h";
-            txtBox.Text = Math.Round((n - 1) * T + t_0 + 1,2) + " < h < " + Math.Round(n * T,2);
+            txtBox.Text = Math.Round(1/(n * T),3) + " < h < " + Math.Round(1 / ((n-1)* T + t_0), 3);
             txtBox.Width = 108;
             txtBox.Height = 18;
             txtBox.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;

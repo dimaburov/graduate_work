@@ -15,6 +15,7 @@ namespace WpfApp4
         public ObservableDataSource<Point> Data_Xdt_Ydt { get; set; }
         public ObservableDataSource<Point> Data_X_t { get; set; }
         public ObservableDataSource<Point> Data_Xdt_t { get; set; }
+        public ObservableDataSource<Point> Data_Udt_t { get; set; }
 
         public MyViewModel()
         {
@@ -22,6 +23,7 @@ namespace WpfApp4
             Data_Xdt_Ydt = new ObservableDataSource<Point>();
             Data_X_t = new ObservableDataSource<Point>();
             Data_Xdt_t = new ObservableDataSource<Point>();
+            Data_Udt_t = new ObservableDataSource<Point>();
         }
     }
 }
